@@ -30,9 +30,7 @@ from django.conf import settings
 #     print(latlng.ip)
 #     print(latlng.lat)
 #     print(latlng.lng)
-#     # return render(request,'index.html',{'lat':latlng.lat, 'lng':latlng.lng})
-#     return render(request,'index.html',{'lat':9.617436 ,'lng': 76.532735})
-
+#     return render(request,'index.html',{'lat':latlng.lat, 'lng':latlng.lng})
 
 # signup
 def signup(request):

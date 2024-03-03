@@ -35,4 +35,7 @@ urlpatterns = [
     path('request_accept/<pk>', request_accept,name='user.request_accept'),
     path('request_reject/<pk>', request_reject,name='user.request_reject'),
     path('recived_cancel/<pk>', recived_cancel,name='user.recived_cancel'),
+    path('dogspot_list/', dogspot_list, name='user.dogspot_list'),
+    path('dogspot_update/', dogspot_update, name='user.dogspot_update'),
+    path('dogspot_delete/', dogspot_delete, name='user.dogspot_delete'),
 ]
