@@ -7,5 +7,21 @@ from django.contrib.auth.models import AbstractUser
 
 # Extending custom User model fields
 class User(AbstractUser):
-    role=models.CharField(default='user', max_length=50, null=True, blank=True)
+    ROLE_CHOICE = [
+        ("admin", "admin"),
+        ("user", "user")
+    ]
+    STATUS_CHOICE = [
+        ("active", "active"),
+        ("suspend", "suspend"),
+        ("ban", "ban")
+    ]
+    role=models.CharField(default='user', choices=ROLE_CHOICE, max_length=50, null=True, blank=True)
+    status=models.CharField(default='active', choices=STATUS_CHOICE, max_length=50, null=True, blank=True)
+    place=models.CharField(max_length=255, null=True, blank=True)
+    latitude=models.CharField(max_length=255, null=True, blank=True)
+    longitude=models.CharField(max_length=255, null=True, blank=True)
+    profile_pic=models.ImageField(upload_to='users/profile_pic', null=True, blank=True)
+    willing_to_adopt=models.CharField(max_length=50,default='no')
+
 

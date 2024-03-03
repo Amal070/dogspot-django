@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+
+
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Users</h4>
+              <div class="card-header-action">
+                <form>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-btn">
+                      <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-striped" id="sortable-table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">
+                        <i class="fas fa-th"></i>
+                      </th>
+                     
+                      <th>Profile</th>
+                      <th>Username</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody class="ui-sortable">
+                      {% for u in user %}
+                      {% if u.role != "admin" %}
+                    <tr>
+                      <td>
+                        <div class="sort-handler ui-sortable-handle">
+                          <i class="fas fa-th"></i>
+                        </div>
+                      </td>
+                      
+                      
+                      <td>
+                        {% if u.profile_pic  %}
+                        <img alt="image" src="{{u.profile_pic.url}}" class="" style="width: 50px; height: 50px; border-radius: 50%;" data-toggle="tooltip" title="" data-original-title="Wildan Ahdian">
+                        {% endif %}  
+                    </td>
+                      <td>
+                        <div style="font-size: x-large;">{{u.first_name}} {{u.last_name}}</div>
+                      </td>
+                      <td><a href="{% url "admin.user_details" u.id %}" class="btn btn-primary">Read More</a></td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+                    
+          </div>
+        </div>
+      </div>
+
+</section>
+
+{% endblock %}
+
+
+{% comment %} {% block scripts %}
+<script>
+    window.onload = function() {
+        var table = document.getElementById("ortable-table");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+            var cell = rows[i].insertCell(0);
+            cell.innerHTML = i + 1;
+        }
+    };
+</script>
+
+
+
+{% endblock %} {% endcomment %}

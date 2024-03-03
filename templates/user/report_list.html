@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+User Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'user/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+    
+    <h1>Report list<h1>
+      <div class="card">
+        <div class="card-body">
+            <table class="table" style="size: 5; border: 2px;;">
+              <thead style="font-size:xx-large;">
+                <tr>
+                  <th scope="col">Missing Case</th>
+                  <th scope="col">Categor</th>
+                  <th scope="col">Summery</th>
+                  <th scope="col">Date</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+            <tbody style="font-size: large;">
+                {% for l in li %}
+                <tr>
+                    <td>{{ l.missing_id.description }}</td>
+                    <td>{{ l.category }}</td>
+                    <td>{{ l.report_summery }}</td>
+                    <td>{{ l.date }}</td>
+                    <td><a href="{% url 'user.report_delete' l.id %}" onclick="return confirm('Are you sure you want to delete this report?')"><button class="btn btn-primary">Delete</button></a></td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

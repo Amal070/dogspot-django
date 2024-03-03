@@ -11,11 +11,15 @@
         {% comment %} {% if request.resolver_match.url_name == 'admin.dashboard' %} active {% endif %} {% endcomment %}
 
         <li class="dropdown active">
-            <a href="#" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+            <a href="{% url "admin.dashboard" %}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+        </li>
+
+        <li class="dropdown active">
+            <a href="{% url "admin.profile" %}" class="nav-link"><i data-feather="user"></i><span>Profile</span></a>
         </li>
 
         <li class="dropdown ">
-            <a href="#" class="nav-link"><i data-feather="users"></i><span>Users</span></a>
+            <a href="{% url "admin.users" %}" class="nav-link"><i data-feather="users"></i><span>Users</span></a>
         </li>
 
         <li class="dropdown ">
@@ -23,8 +27,38 @@
         </li>
 
 
+        <li class="dropdown">
+            <a href="#" class="menu-toggle nav-link has-dropdown">
+                <i data-feather="alert-triangle"></i><span>Missing case</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{% url "admin.missings_all" %}">All Cases</a></li>
+                <li><a class="nav-link" href="{% url "admin.missings_your" %}">Your Cases</a></li>
+                <li><a class="nav-link" href="{% url "admin.missings_form" %}">Add Cases</a></li>
+            </ul>
+        </li>
 
-       <li class="dropdown">
+        <li class="dropdown">
+            <a href="#" class="menu-toggle nav-link has-dropdown" style="padding-left: 15px;">
+                <i class="fas fa-hand-holding-heart"></i><span>Adoption</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{% url 'admin.adoption_form' %}">Add Adoption</a></li>
+                <li><a class="nav-link" href="{% url "admin.adoption_view" %}">Your Adoptions</a></li>
+                <li><a class="nav-link" href="{% url "admin.adoption_all_view" %}">All Adoptions</a></li>
+                <li><a class="nav-link" href="{% url "admin.adoption_snd_view" %}">Request Sended </a></li>
+            </ul>
+        </li>
+        
+        <li class="dropdown">
+            <a href="#" class="menu-toggle nav-link has-dropdown">
+                <i data-feather="thumbs-down"></i><span>Reports</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="#">Dogspot</a></li>
+                <li><a class="nav-link" href="{% url "admin.report_list" %}">Missing case</a></li>
+            </ul>
+        </li>
+
+
+        <li class="dropdown">
             <a href="#" class="menu-toggle nav-link has-dropdown"><i
                     data-feather="briefcase"></i><span>Widgets</span></a>
             <ul class="dropdown-menu">

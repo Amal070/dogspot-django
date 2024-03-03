@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}
+User Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'user/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+
+
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Request received</h4>
+              <div class="card-header-action">
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-striped" id="sortable-table">
+                  <thead>
+                    <tr>
+                      {% comment %} <th class="text-center">
+                        <i class="fas fa-th"></i>
+                      </th> {% endcomment %}
+                     
+                      <th>Profile</th>
+                      <th>Breed</th>
+                      <th>Dog name</th>
+                      <th>        </th>
+                      <th>        </th>
+                      <th>        </th>
+                      
+                      
+                    </tr>
+                  </thead>
+                  <tbody class="ui-sortable">
+                    {% for r in ruq %}
+                    <tr>
+
+                    <td>
+                        {% if r.adoption.image  %}
+                        <img alt="image" src="{{r.adoption.image.url}}" class="" style="width: 50px; height: 50px; border-radius: 50%;" data-toggle="tooltip" title="" data-original-title="Wildan Ahdian">
+                        {% endif %}  
+                    </td>
+                      <td>
+                        <div style="font-size: x-large;">{{r.adoption.breed}}</div>
+                      </td>
+                      <td>
+                        <div style="font-size: x-large;">{{r.adoption.dog_name}}</div>
+                      </td>
+                      
+                      <td><a href="{% url "user.adoption_snd_details" r.adoption.id %}" class="btn btn-primary">Details</a></td>
+                       {% if r.approval_request == 'active'  %}
+                      <td><a href="{% url "user.request_accept" r.id %}" class="btn btn-success">Accept</a></td>
+                      <td><a href="{% url "user.request_reject" r.id %}" class="btn btn-danger">Reject</a></td>
+                      {% elif r.approval_request == 'accept'  %}
+                      <td><a href="" class="btn btn-success disabled">Accepted</a></td>
+                      <td><a href="{% url "user.recived_cancel" r.id %}" class="btn btn-danger">Cancel</a></td>
+                      {% elif r.approval_request == 'reject' %}
+                      <td><a href="" class="btn btn-warning disabled">Rejected</a></td>
+                      <td><a href="{% url "user.recived_cancel" r.id %}" class="btn btn-danger">Cancel</a></td>
+  
+                      {% endif %} 
+                      
+                     
+                    </tr>
+                    {% endfor %}
+                   
+        
+                </tbody>
+            </table>
+                    
+          </div>
+        </div>
+      </div>
+
+</section>
+
+{% endblock %}

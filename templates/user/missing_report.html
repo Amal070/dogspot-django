@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Report</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        Select category: <select name="category" id="">
+            <option value="fake">Fake</option>
+            <option value="removing">Removing request</option>
+            <option value="closed">Case closed</option>
+            <option value="other">Other</option>
+        </select><br>
+        <textarea name="summery" placeholder="Enter the reason for Reporting"></textarea><br>
+        <button type="submit">Report</button><br>
+
+
+    </form>
+    
+</body>
+</html>

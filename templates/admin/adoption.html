@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+    <section class="section">
+        <h1>Your Adoptions</h1><br><br><br>
+
+
+
+        <div class="section-body">
+          <div class="row">
+            {% for m in adoption  %}
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+              <article class="article">
+                <div class="article-header">
+                  <div class="article-image" data-background="{{ m.image.url }}" style="border-radius: 10px; background-image: url(&quot;{{ m.image.url }}&quot;);">
+                  </div>
+                  <div class="article-title">
+                    <h2><a href="#"></a></h2>
+                  </div>
+                </div>
+                <div class="article-details">
+                  <h5 style="color: black;">Name: {{m.dog_name}}</h5>
+                  <h6 style="color: black;">Breed: {{m.breed}}</h6>
+                  <div class="article-cta">
+                    <a href="{% url "admin.adoption_details" m.id %}" class="btn btn-primary">View Details</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+            
+            {% endfor %}
+          </div>
+          
+        </div>
+        
+    
+    
+    </section>
+
+{% endblock %}

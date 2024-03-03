@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+        <div class="card">
+            <div class="chat">
+              
+                <div class="chat-header clearfix">
+                  <div class="icon-preview">
+                <a style="color: black;" href="{% url "admin.missings_your" %}"><i class="fas fa-arrow-left"></i></a>
+                   </div><br>
+                    {% comment %} <img src="" alt="avatar"> {% endcomment %}
+                   
+                    <div class="chat-about">
+                      <div class="chat-with">Comments</div>
+                        {% comment %} <div class="chat-num-messages"> </div> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+            <div class="chat-box" id="mychatbox">
+                <div class="card-body chat-content" tabindex="2" style="overflow: hidden; outline: none;">
+                    {% for c in comm  %}
+                    <div class="chat-item chat-left" style="">
+                        <img style="height: 40px; width: 45px;" src=" {% if c.user_id.profile_pic  %}
+                        {{c.user_id.profile_pic.url}}
+                        {% endif %}">
+                        <div class="chat-details">
+
+                           
+                            
+                            <div class="chat-text" style="width: 70%;">
+                                <h6>{{c.user_id.first_name}} {{c.user_id.last_name}}</h6>
+                                {{c.comments}}
+                               
+                                <a href="{% url "admin.comment_delete_your" c.id %}" style="float: right;" onclick="return confirm('Are you sure you want to delete this item?')"><i style="color: crimson;" class="fas fa-trash-alt"></i> </a>
+                            </div>
+                            <div class="chat-time">{{c.date}}</div>
+                            
+                </div>
+             </div>
+             {% endfor %}
+             </div>
+        <div class="card-footer chat-form">
+          <form id="chat-form" method="post">
+            {% csrf_token %}
+            <input type="text" name="Comments" class="form-control" placeholder="Type a message">
+            <button type="submit" class="btn btn-primary">
+              <i class="far fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Page Specific JS File -->
+{% comment %} <script src="{% static 'dashboard/assets/js/page/chat.js' %}"></script> {% endcomment %}
+<script>
+  
+
+if ($("#chat-scroll").length) {
+  $("#chat-scroll").css({
+    height: 450
+  }).niceScroll();
+}
+
+if ($(".chat-content").length) {
+  $(".chat-content").niceScroll({
+    cursoropacitymin: .3,
+    cursoropacitymax: .8,
+  });
+  $('.chat-content').getNiceScroll(0).doScrollTop($('.chat-content').height());
+}
+
+
+
+
+
+
+</script>
+{% endblock %}

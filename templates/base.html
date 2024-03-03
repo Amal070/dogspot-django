@@ -20,7 +20,8 @@
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="{% static 'dashboard/assets/css/custom.css' %}">
     <link rel="stylesheet" href="{% static 'dashboard/assets/css/animate.min.css' %}">
-    <link rel='shortcut icon' type='image/x-icon' href="{% static 'dashboard/assets/img/favicon.ico' %}"/>
+    <!-- <link rel='shortcut icon' type='image/x-icon' href="{% static 'dashboard/assets/img/custom_fav_icon/blue1.ico' %}" sizes="50x32" /> -->
+    <link rel='shortcut icon' type="image/png" sizes="32x32" href="{% static 'dashboard/assets/img/custom_fav_icon/dogspot.ico' %}" sizes="50x32" />
     
     <!-- jquery-ui -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
@@ -70,6 +71,10 @@
                             <!-- <div class="dropdown-title">Hello {{ request.user }}</div> -->
                             
                         
+                            <a href="{% url 'user.profile' %}" class="dropdown-item has-icon text-danger"> <i
+                                class="fas fa-user"></i>
+                                {{request.user.username}}
+                            </a>
                             <a href="{% url 'logout' %}" class="dropdown-item has-icon text-danger"> <i
                                 class="fas fa-sign-out-alt"></i>
                                 Logout
@@ -94,8 +99,8 @@
 
             </div>
             <footer class="main-footer">
-                <div class="footer-left">
-                    <a href="">Automated template by Abhijith KR</a>
+                <div style="font-family: Arial, sans-serif; font-size: 30px; font-weight: normal; color: #333;" class="footer-left">
+                    <a href="#" style="text-decoration: none;">Dogspot</a>
                 </div>
                 <div class="footer-right">
                 </div>

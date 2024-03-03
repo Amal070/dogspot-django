@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+    <section class="section">
+    
+   
+
+    
+        <div class="container">
+          <input type="checkbox" id="switch">
+         <div class="outer">
+           <div class="content">
+             <label for="switch">
+               <span class="toggle">
+                 <span class="circle"></span>
+               </span>
+             </label>
+             <div class="image-box">
+              <img src="{{ missing.image.url }}" alt="">
+             </div>
+             <div class="details">
+                 <div class="buttons">
+                 
+                   </div>
+                   <div class="name"><h1> Name: {{missing.dog_name}}</h1></div>
+                   <div class="name"><h5> Breed: {{missing.breed}}<br> Color: {{missing.color}}</h5></div>
+                   <p style="font-size: xx-large; font-family: serif; color: black;">{{missing.description}}</p>
+                   <div style="font-size: larger;" class="name"><h9>Owner: {{missing.owner_name}} <br>Place: {{missing.place}}<br>Contact: {{missing.phone_no}} </h9> </div>
+                   <div class="buttons">
+                       
+       
+                       <div style="display: flex; justify-content: space-around;">
+                   <a style="text-decoration: none;" href="{% url "admin.missing_edit" missing.id  %}"><button>Update</button></a>
+                   <a style="color: crimson; margin: 8%; text-decoration: none;" href="{% url "admin.missing_delete_y" missing.id %}" onclick="return confirm('Are you sure you want to delete this item?')"><i class="material-icons">delete</i></a>
+                       </dv>
+                           
+                   </div>
+               </div>
+             <div class="media-icons">
+               <i class="fab fa-facebook-f"></i>
+               <i class="fab fa-twitter"></i>
+               
+             </div>
+           </div>
+         </div>
+        </div>
+
+
+
+</section>
+
+{% endblock %}
+
+
+{% block scripts %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Poppins',sans-serif;
+}
+.outer{
+height: 50vh;
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #f2f2f2;
+}
+#switch:checked ~ .outer{
+background: #092c3e;
+}
+.content{
+display: flex;
+width: 700px;
+padding: 15px;
+background: #fff;
+border-radius: 10px;
+position: relative;
+box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+#switch:checked ~ .outer .content{
+background: #092c3e;
+box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+.outer .toggle{
+position: absolute;
+width: 40px;
+height: 20px;
+border-radius: 20px;
+background: #092c3e;
+right: 15px;
+top: 13px;
+display: flex;
+align-items: center;
+cursor: pointer;
+}
+#switch:checked ~ .outer .toggle{
+background: #fff;
+}
+.outer .toggle .circle{
+margin-left: 3px;
+height: 16px;
+width: 16px;
+border-radius: 50%;
+background: #fff;
+transition: all 0.3s ease;
+}
+#switch:checked ~ .outer .circle{
+margin-left: 22px;
+background: #092c3e;
+}
+.image-box {
+height: 232px;
+width: 200px;
+border-radius: 12px;
+padding: 3px;
+background: #092c3e;
+}
+.image-box img {
+height: 100%;
+width: 100%;
+object-fit: scale-down;
+border: 3px solid #fff;
+border-radius: 12px;
+}
+#switch:checked ~ .outer .image-box{
+box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+#switch:checked ~ .outer .image-box img{
+border-color: transparent;
+}
+.content .details{
+width: 58%;
+margin: 10px 0 20px 20px;
+color: #092c3e;
+}
+#switch:checked ~ .outer .details{
+transition: 0.1s;
+color: #fff;
+}
+.content .details .name{
+font-size: 23px;
+font-weight: 600;
+}
+.content .details .job{
+font-size: 18px;
+font-weight: 500;
+}
+.content .details p{
+font-size: 15px;
+margin-top: 6px;
+}
+.content button{
+display: block;
+margin-top: 16px;
+outline: none;
+border: none;
+font-size: 17px;
+padding: 6px 14px;
+border-radius: 6px;
+color: #fff;
+cursor: pointer;
+background: #092c3e;
+transition: all 0.3s ease;
+}
+.content button:hover{
+transform: scale(0.97);
+}
+#switch:checked ~ .outer button{
+background: #fff;
+color: #092c3e;
+}
+.media-icons{
+position: absolute;
+bottom: 16px;
+right: 15px;
+margin-top: 12px;
+justify-content: flex-end;
+}
+.media-icons i{
+display: inline-flex;
+margin: 0 4px;
+font-size: 16px;
+color: #092c3e;
+opacity: 0.7;
+cursor: pointer;
+}
+.media-icons i:hover{
+opacity: 1;
+}
+#switch:checked ~ .outer i{
+color: #fff;
+opacity: 1;
+}
+#switch{
+display: none;
+}
+</style>
+
+
+{% endblock %}

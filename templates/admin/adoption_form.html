@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>Add Adoption</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card">
+            <div class="card-header">
+              <div class="icon-preview">
+                <a style="color: black;" href="#"><i class="fas fa-arrow-left"></i></a>
+                </div><br>
+              {% comment %} <h4>Add Missing case</h4> {% endcomment %}
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="section-title"> Dog name:</label>
+                <input type="text" class="form-control" name="dog_name">
+              </div>
+              <div class="form-group">
+                <label class="section-title"> Breed:</label>
+                <input type="text" class="form-control" name="breed">
+              </div>
+              <div class="form-group">
+                <label class="section-title"> Color:</label>
+                <input type="text" class="form-control" name="color">
+              </div>
+              <div class="form-group">
+                <label class="section-title"> Owner name:</label>
+                <input type="text" class="form-control" name="owner_name">
+              </div>
+              <div class="form-group">
+                <label class="section-title"> Address</label>
+                <textarea name="Address" class="form-control" id="" cols="100" rows="100"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="section-title">Phone No:</label>
+                <input type="text" class="form-control" name="Phone_no" maxlength="10">
+              </div>
+              <div class="form-group">
+                <label class="section-title"> Description:</label>
+                <!-- <input type="text" class="form-control" name="Description"> -->
+                <textarea name="Description" class="form-control" id="" cols="100" rows="100"></textarea>
+              </div>
+              <div class="section-title">Image:</div>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" name="Image" required>
+                <label class="custom-file-label" for="customFile">Choose image</label><br><br>
+            </div>
+            <label for="">
+              <span style="color: red;">*</span>
+              Your adoption post has been created. The system will now send adoption requests to interested adoptees. Check the 'Requests Sent' section in the adoption block for updates, and the individual receiver can choose to 'accept' or 'reject' your request. Please wait for confirmation from the adoptee.
+            </label>
+            <div class="card-footer">
+          
+              <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+        {% comment %} <button type="submit" name="submit" class="btn btn-primary">Submit</button> {% endcomment %}
+    </div>
+</div>
+    {% comment %} Place: <input type="text" name="Place">
+    Phone_no: <input type="text" name="Phone_no" maxlength="10">
+    Description: <input type="text" name="Description">
+    Image: <input type="file" name="Image" required> {% endcomment %}
+    
+    </form>
+
+
+    
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+  {% if messages %}
+    {% for message in messages %}
+    
+
+      iziToast.success({
+      position:'topRight',
+      timeout: 5000, 
+      icon: 'fa fa-chrome', 
+      title: 'Adoption', 
+      message: 'Added successfully'
+    });
+      
+    {% endfor %}
+{% endif %}
+
+  
+
+</script>
+{% endblock scripts %}

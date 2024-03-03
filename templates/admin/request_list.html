@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+
+
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Request List of {{adoption1.dog_name}} | {{adoption1.breed}} {{request.user.id}},{{adoption1.id}}</h4>
+              <div class="card-header-action">
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-striped" id="sortable-table">
+                  <thead>
+                    <tr>
+                      {% comment %} <th class="text-center">
+                        <i class="fas fa-th"></i>
+                      </th> {% endcomment %}
+                     
+                      <th>Profile</th>
+                      <th>Username</th>
+                      <th>        </th>
+                      <th>        </th>
+                      
+                      
+                    </tr>
+                  </thead>
+                  <tbody class="ui-sortable">
+                    {% for r in ruq %}
+                    <tr>
+
+                    <td>
+                        {% if r.user_id.profile_pic  %}
+                        <img alt="image" src="{{r.user_id.profile_pic.url}}" class="" style="width: 50px; height: 50px; border-radius: 50%;" data-toggle="tooltip" title="" data-original-title="Wildan Ahdian">
+                        {% endif %}  
+                    </td>
+                      <td>
+                        <div style="font-size: x-large;">{{r.user_id.first_name}} {{r.user_id.last_name}}</div>
+                      </td>
+                      {% if r.approval_request == 'active'  %}
+                      <td><a href="" class="btn btn-primary disabled">Sended</a></td>
+                      <td><a href="{% url "admin.request_cancel" r.id %}" class="btn btn-danger">Cancel</a></td>
+                      {% elif r.approval_request == 'accept'  %}
+                      <td><a href="" class="btn btn-success disabled">Accepted</a></td>
+                      <td><a href="{% url "admin.request_profile" r.user_id.id %}" class="btn btn-primary">View profile</a></td>
+                      {% elif r.approval_request == 'reject' %}
+                      <td><a href="" class="btn btn-warning disabled">Rejected</a></td>
+                      {% else %}
+                      <td><a href="{% url "admin.request_send" r.id %}" class="btn btn-primary">Send</a></td>
+  
+                      {% endif %}
+                      
+                     
+                    </tr>
+                    {% endfor %}
+                   
+        
+                </tbody>
+            </table>
+                    
+          </div>
+        </div>
+      </div>
+
+</section>
+
+{% endblock %}

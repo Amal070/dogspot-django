@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<section class="section">
+
+    <div class="card author-box">
+        <div class="card-body">
+          <div class="author-box-center">
+            <img alt="image" style="object-fit: cover; width: 100px; height: 100px;" src=" {% if pro.profile_pic  %}
+            {{pro.profile_pic.url}}
+            {% endif %}" class="rounded-circle author-box-picture">
+           
+            <div class="clearfix"></div>
+            <div class="author-box-name">
+              <h5>{{pro.first_name}} {{pro.last_name}}</h5>
+            </div>
+            <div class="author-box-job">{{pro.username}}</div>
+          </div>
+          <div class="text-center">
+            <div class="author-box-description">
+              {{pro.place}}
+            </div>
+            <div class="mb-2 mt-3">
+              <div class="text-small font-weight-bold">Login date: {{pro.date_joined}}</div>
+               
+              </div>
+            </div>
+            <div class="article-cta">
+            <a href="#" class="btn btn-social-icon mr-1 btn-facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="btn btn-social-icon mr-1 btn-twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="btn btn-social-icon mr-1 btn-github">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="btn btn-social-icon mr-1 btn-instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <div class="w-100 d-sm-none"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endblock %}

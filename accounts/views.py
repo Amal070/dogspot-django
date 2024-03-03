@@ -15,22 +15,24 @@ from django.template.loader import render_to_string # email html setup purpose
 from django.core.mail import EmailMessage # Email sending purpose
 from django.conf import settings 
 
-import geocoder
+# import geocoder
 
-# Create your views here.
+# # Create your views here.
 
-# index
-def index(request):
-    latlng = geocoder.ip('me')
-    # if request.user.is_authenticated: 
-    #     print(request.user,'User already logged in')
-    #     return render(request,'admin/dashboard.html')
-    # else:
-    print(latlng)
-    print(latlng.ip)
-    print(latlng.lat)
-    print(latlng.lng)
-    return render(request,'index.html',{'lat':latlng.lat, 'lng':latlng.lng})
+# # index
+# def index(request):
+#     latlng = geocoder.ip('me')
+#     # if request.user.is_authenticated: 
+#     #     print(request.user,'User already logged in')
+#     #     return render(request,'admin/dashboard.html')
+#     # else:
+#     print(latlng)
+#     print(latlng.ip)
+#     print(latlng.lat)
+#     print(latlng.lng)
+#     # return render(request,'index.html',{'lat':latlng.lat, 'lng':latlng.lng})
+#     return render(request,'index.html',{'lat':9.617436 ,'lng': 76.532735})
+
 
 # signup
 def signup(request):
@@ -353,3 +355,4 @@ def forgot_password_reset(request):
         
 
     return render(request,'accounts/forgot_password_reset.html',{})
+
