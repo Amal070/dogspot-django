@@ -2,3 +2,6 @@ venv
 Dogspot/config.py
 media
 todo.txt
+__pycache__
+db.sqlite3
+migrations
