@@ -6,3 +6,4 @@ from user.models import *
 
 admin.site.register(Map_Details)
 admin.site.register(Dog_Pics)
+admin.site.register(adoption_request)

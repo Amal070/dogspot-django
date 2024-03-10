@@ -24,9 +24,12 @@ from io import BytesIO # for image compression
 # Create your views here.
 
 from accounts.models import User
+from django.contrib.auth.decorators import login_required
+
+
 
 # dashboard
-
+@login_required
 def dashboard(request):
     user_count = User.objects.exclude(role = 'admin').count()
 
@@ -35,6 +38,7 @@ def dashboard(request):
     return render(request, 'user/dashboard.html', context)
 
 # show all dogspot marker in map
+@login_required
 def map_view(request):
     latlng = geocoder.ip('me')
     # if request.user.is_authenticated: 
@@ -51,7 +55,7 @@ def map_view(request):
     context = {'lat':latlng.lat, 'lng':latlng.lng, 'map_db' : map_db}
     return render(request, 'user/map_view.html', context)
 
-
+@login_required
 def static_dogspot_marker_map(request):
     latlng = geocoder.ip('me')
     # if request.user.is_authenticated: 
@@ -68,32 +72,38 @@ def static_dogspot_marker_map(request):
 
 
 
-from PIL import Image # for image compression
+from PIL import Image, ImageFilter # for image compression
 from io import BytesIO # for image compression
 from django.core.files.base import ContentFile #for image compression
 # image compression function
 def image_compressor(image_file, quality=90):
-    # Open the image using PIL
-    img = Image.open(image_file)
-    print(f'image name: {image_file} is compressing.........')
+    try:
+        # Open the image using PIL
+        img = Image.open(image_file)
+        print(f'image name: {image_file} is compressing.........')
 
-    # Resize the image (optional, if you want to resize)
-    width, height = img.size
-    img = img.resize((width, height), Image.ANTIALIAS)
+        # Resize the image (optional, if you want to resize)
+        width, height = img.size
+        # img = img.resize((width, height), Image.ANTIALIAS)
+        img = img.resize((width, height), ImageFilter.ANTIALIAS)
 
-    # Convert image to bytes with compression quality
-    img_bytes = BytesIO()
-    img.save(img_bytes, format='JPEG', quality=quality)
+        # Convert image to bytes with compression quality
+        img_bytes = BytesIO()
+        img.save(img_bytes, format='JPEG', quality=quality)
 
-    # Reset the file pointer to the beginning
-    img_bytes.seek(0)
+        # Reset the file pointer to the beginning
+        img_bytes.seek(0)
 
-    # Create a ContentFile object from the compressed image data
-    compressed_image = ContentFile(img_bytes.read(), name=image_file.name)
+        # Create a ContentFile object from the compressed image data
+        compressed_image = ContentFile(img_bytes.read(), name=image_file.name)
 
-    return compressed_image # ready for saving to database in "ImageField" field
+        return compressed_image # ready for saving to database in "ImageField" field
+    
+    except:
+        print('image compression failed.....so real image returned for saving')
+        return image_file
 
-
+@login_required
 def add_dogspot(request, lat, lng):
     if request.method == 'POST':
         length = request.POST.get('length')
@@ -177,7 +187,7 @@ def add_dogspot(request, lat, lng):
     print(request.user, 'usertttttttttttt')
 
     return render(request, 'user/add_dogspot.html', {'lat':lat, 'lng':lng})
-
+@login_required
 def dogspot_list(request):
     map_data = Map_Details.objects.filter(user=request.user.id)
     # print(map_data, request.user.role)
@@ -185,6 +195,7 @@ def dogspot_list(request):
     return render(request, 'user/dogspot_list.html', context)
 
 # update
+@login_required
 def dogspot_update(request):
     if request.method == 'POST' and not request.headers.get('x-requested-with') == 'XMLHttpRequest':
         object_id = request.POST.get('id')
@@ -322,7 +333,7 @@ def dogspot_update(request):
     else:
         return redirect(dogspot_list)
 
-
+@login_required
 def dogspot_delete(request):
     if request.method == 'POST':
         object_id = request.POST.get('delete_id')
@@ -369,10 +380,11 @@ def dogspot_delete(request):
 # def profile_update(request):
 #     return render(request, 'user/profile_update.html')
 
-
+@login_required
 def settings(request):
     return render(request, 'user/profile.html')
 
+@login_required
 def missings_form(request):
     # missings=missing_case(place='kottayam',phone_no=7373773737,description='wanted')
     # missings.save()
@@ -390,18 +402,19 @@ def missings_form(request):
         messages.success(request, 'missing case')
     return render(request,'user/missing_form.html')
 
-
+@login_required
 def missings(request):
     
     missing=missing_case.objects.filter(user_id=request.user.id)
     return render(request,'user/missing_case.html',{'missing':missing})
 
+@login_required
 def missing_details(request,pk):
     
     missing=missing_case.objects.get(pk=pk)
     return render(request,'user/missing_details.html',{'missing':missing})
 
-
+@login_required
 def edit(request,pk):
     edit_missing=missing_case.objects.get(pk=pk,user_id=request.user.id)
     if request.POST:
@@ -429,14 +442,14 @@ def edit(request,pk):
         messages.success(request, 'missing case')
     return render(request,'user/missing_edit.html',{'edit_missing':edit_missing})
 
-
+@login_required
 def delete(request,pk):
     missing_delete=missing_case.objects.get(pk=pk)
     missing_delete.delete()
     return redirect(missings)
 
 
-
+@login_required
 def comment_view(request,pk):
     if request.POST:
         commenter=request.POST.get('Comments')
@@ -445,7 +458,7 @@ def comment_view(request,pk):
     comm=comment.objects.filter(missing_id=pk)
     return render(request,'user/comments.html',{'comm':comm})
 
-
+@login_required
 def comment_delete(request,pk):
 
     com_dele=comment.objects.get(id=pk)
@@ -453,7 +466,7 @@ def comment_delete(request,pk):
     return redirect('/user/comment/' + str(com_dele.missing_id_id))
 
 
-
+@login_required
 def missing_rpt(request,pk):
     if request.POST:
         category=request.POST.get('category')
@@ -462,25 +475,28 @@ def missing_rpt(request,pk):
         report_obj.save()
     return render(request,'user/missing_report.html')
 
+@login_required
 def report_case(request,pk):
     mis=missing_report.objects.filter(missing_id=pk)
     return render(request,'user/missing_rpt_list.html',{'mis':mis})
 
-
+@login_required
 def report_list(request):
     li=missing_report.objects.filter(user_id=request.user.id)
     return render(request,'user/report_list.html',{'li':li})
 
-
+@login_required
 def report_delete(request,pk):
     dele=missing_report.objects.filter(user_id=request.user.id,id=pk)
     dele.delete()
     return redirect(report_list)
 
+@login_required
 def profile(request):
     pro=User.objects.get(id=request.user.id)
     return render(request,'user/profile.html',{'pro':pro})
 
+@login_required
 def profile_edit(request):
     pro_edit=User.objects.get(id=request.user.id)
     if request.POST:
@@ -497,7 +513,7 @@ def profile_edit(request):
     return render(request,'user/profile_update.html',{'pro_edit':pro_edit})
 
 
-
+@login_required
 def adoption_form(request):
    
     if request.POST:
@@ -505,11 +521,14 @@ def adoption_form(request):
         owner_name=request.POST.get('owner_name')
         address=request.POST.get('Address')
         breed=request.POST.get('breed')
+        dog_license=request.POST.get('License')
+        vaccinated=request.POST.get('vaccinated')
+        age=request.POST.get('age')
         color=request.POST.get('color')
         phone_no=request.POST.get('Phone_no')
         description=request.POST.get('Description')
         image=request.FILES['Image']
-        adoption_obj=adoption(address=address,phone_no=phone_no,description=description,image=image,dog_name=dog_name,owner_name=owner_name,breed=breed,color=color,user_id=User.objects.get(id=request.user.id))
+        adoption_obj=adoption(address=address,phone_no=phone_no,description=description,image=image,dog_name=dog_name,owner_name=owner_name,breed=breed,dog_license=dog_license,vaccination=vaccinated,age=age,color=color,user_id=User.objects.get(id=request.user.id))
         adoption_obj.save()
         willing_list=User.objects.filter(willing_to_adopt='yes').exclude(id=request.user.id)
         print("willing_list:",willing_list)
@@ -521,12 +540,14 @@ def adoption_form(request):
     return render(request,'user/adoption_form.html')
 
 
+@login_required
 def adoption_view(request):
     
     adoption1=adoption.objects.filter(user_id=request.user.id)
     return render(request,'user/adoption.html',{'adoption': adoption1})
 
 
+@login_required
 def edit_adoption(request,pk):
     edit_ad=adoption.objects.get(pk=pk,user_id=request.user.id)
     if request.POST:
@@ -536,6 +557,9 @@ def edit_adoption(request,pk):
         address=request.POST.get('Address')
         phone_no=request.POST.get('Phone_no')
         breed=request.POST.get('breed')
+        dog_license=request.POST.get('License')
+        vaccinated=request.POST.get('vaccinated')
+        age=request.POST.get('age')
         color=request.POST.get('color')
         description=request.POST.get('Description')
         image=request.FILES['Image']
@@ -546,6 +570,9 @@ def edit_adoption(request,pk):
         edit_ad.address=address
         edit_ad.phone_no=phone_no
         edit_ad.breed=breed
+        edit_ad.dog_license=dog_license
+        edit_ad.vaccination=vaccinated
+        edit_ad.age=age
         edit_ad.color=color
         edit_ad.description=description
         edit_ad.image=image
@@ -555,72 +582,98 @@ def edit_adoption(request,pk):
     return render(request,'user/adoption_edit.html',{'edit_ad':edit_ad})
 
 
+@login_required
 def adoption_details(request,pk):
     
     adoption2=adoption.objects.get(pk=pk)
     return render(request,'user/adoption_details.html',{'adoption2':adoption2})
 
 
+@login_required
 def adoption_delete(request,pk):
     ad_delete=adoption.objects.get(pk=pk)
     ad_delete.delete()
     return redirect(adoption_view)
 
 
+@login_required
 def adoption_snd_view(request):
     
     adoption1=adoption.objects.filter(user_id=request.user.id)
     return render(request,'user/adoption_req_snd.html',{'adoption': adoption1})
 
-
+@login_required
 def adoption_snd_details(request,pk):
     
     adoption2=adoption.objects.get(pk=pk)
     return render(request,'user/adoption_snd_details.html',{'adoption2':adoption2})
 
-
+@login_required
 def request_list(request,pk):
     adoption1=adoption.objects.get(id=pk)
     ruq=adoption_request.objects.filter(adoption_id=pk)
     return render(request, 'user/request_list.html',{'ruq':ruq,'adoption1':adoption1})
 
+@login_required
 def request_profile(request,pk):
     pro=User.objects.get(id=pk)
     return render(request,'user/request_profile.html',{'pro':pro})
 
+@login_required
 def request_cancel(request,pk):
     ruq=adoption_request.objects.get(id=pk)
     ruq.approval_request='cancel'
     ruq.save()
     return redirect('/user/adp_request_list/' + str(ruq.adoption_id))
 
+@login_required
 def request_send(request,pk):
     ruq=adoption_request.objects.get(id=pk)
     ruq.approval_request='active'
     ruq.save()
     return redirect('/user/adp_request_list/' + str(ruq.adoption_id))
 
+@login_required
 def received_list(request):
     ruq=adoption_request.objects.filter(user_id=request.user.id).exclude(approval_request='cancel')
     print("req:",ruq)
     return render(request, 'user/received_list.html',{'ruq':ruq})
 
+@login_required
 def request_accept(request,pk):
     ruq=adoption_request.objects.get(id=pk)
     ruq.approval_request='accept'
     ruq.save()
     return redirect(received_list)
 
+@login_required
 def request_reject(request,pk):
     ruq=adoption_request.objects.get(id=pk)
     ruq.approval_request='reject'
     ruq.save()
     return redirect(received_list)
 
+@login_required
 def recived_cancel(request,pk):
     ruq=adoption_request.objects.get(id=pk)
     ruq.approval_request='active'
     ruq.save()
+    return redirect(received_list)
+
+
+def is_willing(request):
+    if request.POST:
+        willing=request.POST.get('is_willing')      
+        print("is_willing",willing)
+        w=User.objects.get(id=request.user.id)
+        if willing or willing == 'yes':
+            w.willing_to_adopt='yes'
+            w.save()
+        else:
+            w.willing_to_adopt='no'
+            w.save()
+            print('your already selected no!')
+            
     return redirect(received_list)
 
     

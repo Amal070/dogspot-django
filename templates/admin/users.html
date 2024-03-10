@@ -20,9 +20,10 @@ Admin Dashboard
             <div class="card-header">
               <h4>Users</h4>
               <div class="card-header-action">
-                <form>
+                <form method="post" action="{% url "admin.user_search" %}">
+                  {% csrf_token %}
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Search" name="search_key">
                     <div class="input-group-btn">
                       <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                     </div>
@@ -35,12 +36,10 @@ Admin Dashboard
                 <table class="table table-striped" id="sortable-table">
                   <thead>
                     <tr>
-                      <th class="text-center">
-                        <i class="fas fa-th"></i>
-                      </th>
-                     
+                      <th>       </th>
                       <th>Profile</th>
                       <th>Username</th>
+                      <th>       </th>
                       
                     </tr>
                   </thead>
@@ -63,7 +62,7 @@ Admin Dashboard
                       <td>
                         <div style="font-size: x-large;">{{u.first_name}} {{u.last_name}}</div>
                       </td>
-                      <td><a href="{% url "admin.user_details" u.id %}" class="btn btn-primary">Read More</a></td>
+                      <td><a href="{% url "admin.user_details" u.id %}" class="btn btn-primary">View profile</a></td>
                     </tr>
                     {% endif %}
                     {% endfor %}

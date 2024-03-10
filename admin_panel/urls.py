@@ -7,6 +7,7 @@ urlpatterns = [
     path('map/', map, name='admin.map'),
     path('user/',users,name='admin.users'),
     path('user_details/<pk>',user_details,name='admin.user_details'),
+    path('user_search/',user_search,name='admin.user_search'),
     path('missings_a/',missings_all,name='admin.missings_all'),
     path('missing_details_a/<pk>',missing_details_all,name='admin.missing_details_all'),
     path('missings_y/',missings_your,name='admin.missings_your'),

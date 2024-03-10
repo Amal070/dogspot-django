@@ -34,6 +34,45 @@ Admin Dashboard
                 <label class="section-title"> Color:</label>
                 <input type="text" class="form-control" name="color" value="{{edit_ad.color}}">
               </div>
+
+              <div class="form-group">
+                <label class="section-title">License:</label>
+                
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="License" id="exampleRadios1" {% if edit_ad.dog_license == "yes" %} checked='True' {% endif %} value="yes">
+                  <label class="form-check-label" for="exampleRadios1">
+                    Yes
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="License" id="exampleRadios2" {% if edit_ad.dog_license == "no" %} checked='True' {% endif %} value="no">
+                  <label class="form-check-label" for="exampleRadios2">
+                    No
+                  </label>
+                </div>
+                
+               </div>
+              
+               <div class="form-group">
+                <label class="section-title">Vaccinated:</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="vaccinated" id="example1" {% if edit_ad.vaccination == "yes" %} checked='True' {% endif %} value="yes">
+                  <label class="form-check-label" for="example1">
+                    Yes
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="vaccinated" id="example2"  {% if edit_ad.vaccination == "no" %} checked='True' {% endif %} value="no">
+                  <label class="form-check-label" for="example2">
+                    No
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="section-title"> Age:</label>
+                <input type="text" class="form-control" name="age" value="{{edit_ad.age}}">
+              </div>
               <div class="form-group">
                 <label class="section-title"> Owner name:</label>
                 <input type="text" class="form-control" name="owner_name" value="{{edit_ad.owner_name}}">

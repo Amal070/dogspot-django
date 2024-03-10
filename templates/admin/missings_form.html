@@ -18,6 +18,9 @@ Admin Dashboard
         {% csrf_token %}
         <div class="card">
             <div class="card-header">
+              <div class="icon-preview">
+                <a style="color: black;" href="{% url "admin.missings_your" %}"><i class="fas fa-arrow-left"></i></a>
+                </div><br>
               {% comment %} <h4>Add Missing case</h4> {% endcomment %}
             </div>
             <div class="card-body">

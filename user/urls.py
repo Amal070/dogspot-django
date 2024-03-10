@@ -38,4 +38,5 @@ urlpatterns = [
     path('dogspot_list/', dogspot_list, name='user.dogspot_list'),
     path('dogspot_update/', dogspot_update, name='user.dogspot_update'),
     path('dogspot_delete/', dogspot_delete, name='user.dogspot_delete'),
+    path('is_willing/', is_willing, name='user.is_willing'),
 ]

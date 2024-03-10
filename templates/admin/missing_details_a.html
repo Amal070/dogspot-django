@@ -21,11 +21,9 @@ Admin Dashboardp
    <input type="checkbox" id="switch">
   <div class="outer">
     <div class="content">
-      <label for="switch">
-        <span class="toggle">
-          <span class="circle"></span>
-        </span>
-      </label>
+      <div class="icon-preview">
+        <a style="color: black;" href="{% url "admin.missings_all" %}"><i class="fas fa-arrow-left"></i></a>
+        </div><br>
       <div class="image-box">
        <img src="{{ missing.image.url }}" alt="">
       </div>
@@ -33,10 +31,10 @@ Admin Dashboardp
           <div class="buttons">
           
             </div>
-            <div class="name"><h1> Name: {{missing.dog_name}}</h1></div>
-            <div class="name"><h5> Breed: {{missing.breed}}<br> Color: {{missing.color}}</h5></div>
-            <p style="font-size: xx-large; font-family: serif; color: black;">{{missing.description}}</p>
-            <div style="font-size: larger;" class="name"><h9>Owner: {{missing.owner_name}} <br>Place: {{missing.place}}<br>Contact: {{missing.phone_no}} </h9> </div>
+            <div class="name"><h2 style="color: black;">{{missing.dog_name}}</h2></div>
+            <div class="name"><h5 style="color: black;"> Breed: {{missing.breed}}<br> Color: {{missing.color}}</h5></div>
+            <p style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: large; color: black;">{{missing.description}}</p>
+            <div style="font-size: larger; color: black;" class="name"><h9>Owner: {{missing.owner_name}} <br>Place: {{missing.place}}<br>Contact: {{missing.phone_no}} </h9> </div>
             <div class="buttons">
                 
 
@@ -47,11 +45,6 @@ Admin Dashboardp
                     
             </div>
         </div>
-      <div class="media-icons">
-        <i class="fab fa-facebook-f"></i>
-        <i class="fab fa-twitter"></i>
-        
-      </div>
     </div>
   </div>
  </div>
@@ -71,7 +64,7 @@ box-sizing: border-box;
 font-family: 'Poppins',sans-serif;
 }
 .outer{
-height: 50vh;
+height: 100%;
 width: 100%;
 display: flex;
 justify-content: center;
@@ -131,7 +124,7 @@ background: #092c3e;
 .image-box img {
 height: 100%;
 width: 100%;
-object-fit: scale-down;
+object-fit: cover;
 border: 3px solid #fff;
 border-radius: 12px;
 }

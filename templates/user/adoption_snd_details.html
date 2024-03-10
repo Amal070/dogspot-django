@@ -21,7 +21,7 @@ User Dashboard
    <div class="outer">
      <div class="content">
       <div class="icon-preview">
-        <a style="color: black;" href="{% url "user.adoption_snd_view" %}"><i class="fas fa-arrow-left"></i></a>
+        <a style="color: black;" href="{% url "user.received_list" %}"><i class="fas fa-arrow-left"></i></a>
         </div><br>
       {% comment %} <label for="switch">
         <span class="toggle">
@@ -35,10 +35,10 @@ User Dashboard
           <div class="buttons">
           
             </div>
-            <div class="name"><h1> Name: {{adoption2.dog_name}}</h1></div>
-            <div class="name"><h5> Breed: {{adoption2.breed}}<br> Color: {{adoption2.color}}</h5></div>
-            <p style="font-size: xx-large; font-family: serif; color: black;">{{adoption2.description}}</p>
-            <div style="font-size: larger;" class="name"><h9>Owner: {{adoption2.owner_name}} <br>Place: {{adoption2.address}}<br>Contact: {{adoption2.phone_no}} </h9> </div>
+            <div class="name"><h1 style="color: black; font-family: sans-serif Arial, Helvetica, sans-serif;">{{adoption2.dog_name}}</h1></div>
+            <div class="name"><h5 style="color: black;"> Breed: {{adoption2.breed}}<br> Color: {{adoption2.color}}<br>Age: {{adoption2.age}}<br>Licensed: {{adoption2.dog_license}}<br>Vaccinated: {{adoption2.vaccination}}  </h5></div>
+            <p style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: x-large; color: black;">{{adoption2.description}}</p>
+            <div style="font-size: larger; color: black;" class="name"><h9>Owner: {{adoption2.owner_name}} <br>Place: {{adoption2.address}}<br>Contact: {{adoption2.phone_no}} </h9> </div>
             <div class="buttons">
                 
 
@@ -68,7 +68,7 @@ box-sizing: border-box;
 font-family: 'Poppins',sans-serif;
 }
 .outer{
-height: 50vh;
+height: 100%;
 width: 100%;
 display: flex;
 justify-content: center;
@@ -128,7 +128,7 @@ background: #092c3e;
 .image-box img {
 height: 100%;
 width: 100%;
-object-fit: scale-down;
+object-fit: cover;
 border: 3px solid #fff;
 border-radius: 12px;
 }

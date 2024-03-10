@@ -32,7 +32,7 @@ Admin Dashboard
                 <div class="card-body chat-content" tabindex="2" style="overflow: hidden; outline: none;">
                     {% for c in comm  %}
                     <div class="chat-item chat-left" style="">
-                        <img style="height: 40px; width: 45px;" src=" {% if c.user_id.profile_pic  %}
+                        <img style="height: 40px; width: 45px;" src="  {% if c.user_id.profile_pic  %}
                         {{c.user_id.profile_pic.url}}
                         {% endif %}">
                         <div class="chat-details">

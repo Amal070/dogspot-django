@@ -66,6 +66,7 @@ class missing_case(models.Model):
     latitude=models.CharField(max_length=255,blank=True,null=True)
     longitude=models.CharField(max_length=255,blank=True,null=True)
     user_id=models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
+    title=models.CharField(max_length=50,null=True,blank=True)
 
 
 class comment(models.Model):
@@ -99,6 +100,10 @@ class adoption(models.Model):
     longitude=models.CharField(max_length=250,null=True,blank=True)
     breed=models.CharField(max_length=50)
     color=models.CharField(max_length=50)
+    dog_license=models.CharField(max_length=50,default='no')
+    vaccination=models.CharField(max_length=50,default='no')
+    age=models.CharField(max_length=50,null=True,blank=True)
+
 
 
 class adoption_request(models.Model):

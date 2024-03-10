@@ -24,8 +24,8 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Helping Hand</a>
                 <div class="dropdown-menu m-0">
-                    <a href="#" class="dropdown-item">Missing Cases</a>
-                    <a href="#" class="dropdown-item">Adoption</a>
+                    <a href="{% url "home.missing_cases" %}" class="dropdown-item">Missing Cases</a>
+                    <a href="{% url "home.adoption_view" %}" class="dropdown-item">Adoption</a>
                 </div>
             </div>
             {% comment %} <div class="nav-item dropdown">

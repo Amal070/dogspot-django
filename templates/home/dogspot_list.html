@@ -1,0 +1,220 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block styles %}
+<style>
+    {% comment %} body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    } {% endcomment %}
+    .container_card {
+      text-align: center;
+      margin: 0 auto;
+      margin-top: 10px;
+      width: 80%;
+      max-width: 800px;
+      background-color: #f0f0f0;
+      border-radius: 20px;
+      box-shadow: 20px 20px 60px #bebebe, 
+                  -20px -20px 60px #ffffff;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .overlay {
+      background-color: red;
+      width: 100%;
+      height: 20%;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      opacity: 0.5;
+    }
+    .image-container {
+      width: 100%;
+      height: 350px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      overflow: hidden;
+    }
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .text-container {
+      padding: 20px;
+    }
+    .title {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+    .desc {
+      font-size: 18px;
+      color: black;
+    }
+    .small-image-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .small-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+    }
+    .user-info img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .user-info p {
+      margin: 0;
+      font-size: 16px;
+    }
+    .tag-item {
+      display: inline-block;
+      background-color: #f0f0f0;
+      padding: 5px 10px;
+      border-radius: 10px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+  <!-- Navbar & Carousel Start -->
+    <div class="container-fluid position-relative p-0">
+        
+        {% include "home/navigation_bar.html" %}
+
+
+
+        <div class="container-fluid py-5 wow fadeInUp"  
+            style="background: url('https://images.unsplash.com/photo-1444212477490-ca407925329e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3RyZWV0JTIwZG9nfGVufDB8fDB8fHww');
+            background-size: cover;"
+            data-wow-delay="0.1s">
+
+        <div class=""
+            style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            ">
+        </div>
+        
+
+        <div class="container_card">
+            <!-- <div class="overlay"></div> -->
+            <div class="image-container" >
+            {% for images  in map_data.dog_pics_set.all  %}
+            <img class="image" src="{{images.image.url}}" alt="Main Image" id="mainImage">
+            {% endfor %}
+            </div>
+            <div class="small-image-container">
+            {% for images  in map_data.dog_pics_set.all  %}
+            <img class="small-image" src="{{images.image.url}}" alt="Small Image 1" onclick="changeMainImage('{{ images.image.url }}')">
+            
+            {% endfor %}
+            </div>
+            <div class="text-container">
+            <h1 class="title">{{map_data.place_name}}</h1>
+            <p class="desc"> Zone: {{map_data.zone}}</p>
+            <p class="desc">{{map_data.description}}</p>
+            </div>
+            <div style="padding-left: 15px;">
+                <div style="overflow-x: auto;" id="traits">
+                    {% comment %} <ul style="list-style-type: none; padding: 0; margin: 0;">
+                    <li class="tag-item">{{map_data.behaviour}}</li>
+                
+                    </ul> {% endcomment %}
+                </div>
+                
+            </div>
+            <div class="user-info">
+            <img src="{{map_data.user.profile_pic.url}}" alt="User Thumbnail">
+            <div>
+                <p>{{map_data.user.first_name}} {{map_data.user.last_name}}</p>
+                <p style="font-size: 12px;">{{map_data.email}}</p>
+                <p style="font-size: 12px;">{{map_data.datetime}}</p>
+            </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Map End -->
+
+
+{% endblock content %}
+
+
+
+{% block script %}
+
+
+<style>
+    .trait-button {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 8px 12px;
+      background-color: #3498db;
+      color: #fff;
+      border: 1px solid #2980b9;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+</style>
+
+
+<script>
+    // Your string of values
+    {% comment %} var valuesString = "Aggressive, Biting, Social, Friendly, Barking, Chasing, Territorial, Illness"; {% endcomment %}
+    var valuesString = "{{map_data.behaviour}}";
+  
+    // Split the string into an array of values
+    var valuesArray = valuesString.split(', ');
+  
+    // Get the div element by its ID
+    var divElement = document.getElementById('traits');
+  
+    // Loop through the array and append each value to the div with a button
+  valuesArray.forEach(function(value) {
+    var buttonElement = document.createElement('button');
+    buttonElement.textContent = value;
+    buttonElement.className = 'trait-button'; // Add the class to the button
+    divElement.appendChild(buttonElement);
+  });
+</script>
+
+
+<script>
+    function changeMainImage(newSrc) {
+      document.getElementById('mainImage').src = newSrc;
+    }
+</script>
+  
+
+
+{% endblock script %}

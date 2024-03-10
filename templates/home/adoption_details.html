@@ -1,0 +1,79 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block styles %}
+
+{% endblock styles %}
+
+{% block content %}
+
+<div class="container-fluid position-relative p-0">
+        
+    {% include "home/navigation_bar.html" %}
+
+    <div class="container-fluid py-5 wow fadeInUp"  
+    id="div_background"
+    style="background: url('https://images.unsplash.com/photo-1444212477490-ca407925329e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3RyZWV0JTIwZG9nfGVufDB8fDB8fHww');
+    background-size: cover;"
+    data-wow-delay="0.1s">
+
+
+    <div class="overlay"
+    style="
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+    z-index: 1; /* Ensure the overlay sits on top of the background image */
+    "
+    id="my_overlay">
+    </div> 
+</div>
+</div>
+
+
+<!-- Adoption Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <!-- Adoption Detail Start -->
+                <div class="mb-5">
+                    <img class="img-fluid w-100 rounded mb-5" src="{{adoption2.image.url}}" alt="">
+                    <h1 style="color: black;" class="mb-4">{{missing.title}}</h1>
+                    <p style="color: black;">Dog Name: {{adoption2.dog_name}}<br>Age: {{adoption2.age}}<br>Breed: {{adoption2.breed}}<br>Color: {{adoption2.color}}<br>Vaccinated: {{adoption2.vaccination}}</p>
+                    <p style="color: black;">{{adoption2.description}}</p>
+                    <p style="color: black;">Owner: {{adoption2.owner_name}}<br>Contact: {{adoption2.phone_no}}<br>Location: {{adoption2.address}}</p>
+                </div>
+                
+                <!-- Adoption Detail End -->
+       <form action="{% url "home.adoption_details" adoption2.id %}" method="post">
+        {% csrf_token %}
+        {% if request.user.is_authenticated %}
+            {% if adoption_req.adoption_id == adoption2.id %}
+            <a href="#"class="btn btn-primary">Sended</a>
+            <a href="{% url "user.recived_cancel" adoption_req.id %}"class="btn btn-danger">Cancel</a>
+            {% else %}
+            <button class="btn btn-primary">Send</button>
+            {% endif %}
+        
+        {% else %} 
+        <a href="{% url "login" %}"class="btn btn-primary">Send</a>
+        {% endif %}
+
+       </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- Adoption End -->
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

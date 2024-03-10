@@ -17,8 +17,23 @@ User Dashboard
     <div class="row">
         <div class="col-12">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header" >
               <h4>Request received</h4>
+              
+
+              <div class="card-header-form">
+                <div class="form-group">
+                  <form action="{% url "user.is_willing" %}" method="post" id="form">
+                  {% csrf_token %}
+                    <label class="custom-switch mt-2">
+                    <span class="custom-switch-description">If you are ready to adopt, press the button on &nbsp;&nbsp;</span>
+                    <input type="checkbox" name="is_willing" {% if request.user.willing_to_adopt == 'yes' %}value="yes"{% endif %} id="is_willing" class="custom-switch-input" {% if request.user.willing_to_adopt == 'yes' %}checked{% endif %}>
+                    <span class="custom-switch-indicator"></span>
+                  </label>
+                  </form>
+                </div>
+                </form>
+              </div>
               <div class="card-header-action">
               </div>
             </div>
@@ -83,5 +98,25 @@ User Dashboard
       </div>
 
 </section>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+
+        // Assuming you have a button inside the form with the id 'submitButton'
+        $('#is_willing').on('change', function (event) {
+            // Trigger the form submission when the button is clicked
+            console.log('val:',$("#is_willing").val())
+
+            // Uncomment the following lines if you want to prevent the default form submission
+            event.preventDefault();
+            $('#form').submit();
+        });
+    });
+</script>
+
 
 {% endblock %}

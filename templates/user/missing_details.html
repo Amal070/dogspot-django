@@ -21,11 +21,6 @@ User Dashboard
    <input type="checkbox" id="switch">
   <div class="outer">
     <div class="content">
-      <label for="switch">
-        <span class="toggle">
-          <span class="circle"></span>
-        </span>
-      </label>
       <div class="image-box">
        <img src="{{ missing.image.url }}" alt="">
       </div>
@@ -33,25 +28,20 @@ User Dashboard
           <div class="buttons">
           
             </div>
-            <div class="name"><h1> Name: {{missing.dog_name}}</h1></div>
-            <div class="name"><h5> Breed: {{missing.breed}}<br> Color: {{missing.color}}</h5></div>
-            <p style="font-size: xx-large; font-family: serif; color: black;">{{missing.description}}</p>
-            <div style="font-size: larger;" class="name"><h9>Owner: {{missing.owner_name}} <br>Place: {{missing.place}}<br>Contact: {{missing.phone_no}} </h9> </div>
+            <div class="name"><h2 style="color: black; font-family: sans-serif Arial, Helvetica, sans-serif;"> Name: {{missing.dog_name}}</h2></div>
+            <div class="name"><h5 style="color: black;"> Breed: {{missing.breed}}<br> Color: {{missing.color}}</h5></div>
+            <p style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: larger; color: black;">{{missing.description}}</p>
+            <div style="font-size: larger; color: black;" class="name"><h9>Owner: {{missing.owner_name}} <br>Place: {{missing.place}}<br>Contact: {{missing.phone_no}} </h9> </div>
             <div class="buttons">
                 
 
                 <div style="display: flex; justify-content: space-around;">
-            <a href="{% url "user.missing_edit" missing.id  %}"><button>Update</button></a>
+            <a href="{% url "user.missing_edit" missing.id  %}" style="text-decoration: none;"><button>Update</button></a>
             <a style="color: crimson; margin: 8%;" href="{% url "user.missing_delete" missing.id %}" onclick="return confirm('Are you sure you want to delete this item?')"><i class="material-icons">delete</i></a>
                 </dv>
                     
             </div>
         </div>
-      <div class="media-icons">
-        <i class="fab fa-facebook-f"></i>
-        <i class="fab fa-twitter"></i>
-        
-      </div>
     </div>
   </div>
  </div>
@@ -71,7 +61,7 @@ box-sizing: border-box;
 font-family: 'Poppins',sans-serif;
 }
 .outer{
-height: 50vh;
+height: 100%;
 width: 100%;
 display: flex;
 justify-content: center;
@@ -131,7 +121,7 @@ background: #092c3e;
 .image-box img {
 height: 100%;
 width: 100%;
-object-fit: scale-down;
+object-fit: cover;
 border: 3px solid #fff;
 border-radius: 12px;
 }

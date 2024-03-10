@@ -24,11 +24,6 @@ User Dashboard
       <div class="icon-preview">
         <a style="color: black;" href="{% url "user.adoption_view" %}"><i class="fas fa-arrow-left"></i></a>
         </div><br>
-      <label for="switch">
-        <span class="toggle">
-          <span class="circle"></span>
-        </span>
-      </label>
       <div class="image-box">
        <img src="{{ adoption2.image.url }}" alt="">
       </div>
@@ -36,25 +31,20 @@ User Dashboard
           <div class="buttons">
           
             </div>
-            <div class="name"><h1> Name: {{adoption2.dog_name}}</h1></div>
-            <div class="name"><h5> Breed: {{adoption2.breed}}<br> Color: {{adoption2.color}}</h5></div>
-            <p style="font-size: xx-large; font-family: serif; color: black;">{{adoption2.description}}</p>
-            <div style="font-size: larger;" class="name"><h9>Owner: {{adoption2.owner_name}} <br>Place: {{adoption2.address}}<br>Contact: {{adoption2.phone_no}} </h9> </div>
+            <div class="name"><h2 style="color: black; font-family: sans-serif Arial, Helvetica, sans-serif;"> {{adoption2.dog_name}}</h2></div>
+            <div class="name"><h5 style="color: black;"> Breed: {{adoption2.breed}}<br> Color: {{adoption2.color}}<br>Age: {{adoption2.age}}<br>Licensed: {{adoption2.dog_license}}<br>Vaccinated: {{adoption2.vaccination}}  </h5></div>
+            <p style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: x-large; color: black;">{{adoption2.description}}</p>
+            <div style="font-size: larger; color: black;" class="name"><h9>Owner: {{adoption2.owner_name}} <br>Address: {{adoption2.address}}<br>Contact: {{adoption2.phone_no}} </h9> </div>
             <div class="buttons">
                 
 
                 <div style="display: flex; justify-content: space-around;">
-            <a href="{% url "user.edit_adoption" adoption2.id  %}"><button>Update</button></a>
+            <a href="{% url "user.edit_adoption" adoption2.id  %}" style="text-decoration: none;"><button>Update</button></a>
             <a style="color: crimson; margin: 8%;" href="{% url "user.adoption_delete" adoption2.id %}" onclick="return confirm('Are you sure you want to delete this item?')"><i class="material-icons">delete</i></a>
                 </dv>
                     
             </div>
         </div>
-      <div class="media-icons">
-        <i class="fab fa-facebook-f"></i>
-        <i class="fab fa-twitter"></i>
-        
-      </div>
     </div>
   </div>
  </div>
@@ -74,7 +64,7 @@ box-sizing: border-box;
 font-family: 'Poppins',sans-serif;
 }
 .outer{
-height: 50vh;
+height: 100%;
 width: 100%;
 display: flex;
 justify-content: center;
@@ -134,7 +124,7 @@ background: #092c3e;
 .image-box img {
 height: 100%;
 width: 100%;
-object-fit: scale-down;
+object-fit: cover;
 border: 3px solid #fff;
 border-radius: 12px;
 }

@@ -1,0 +1,82 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block styles %}
+
+{% endblock styles %}
+
+{% block content %}
+
+<div class="container-fluid position-relative p-0">
+        
+    {% include "home/navigation_bar.html" %}
+
+    <div class="container-fluid py-5 wow fadeInUp"  
+    id="div_background"
+    style="background: url('https://images.unsplash.com/photo-1444212477490-ca407925329e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3RyZWV0JTIwZG9nfGVufDB8fDB8fHww');
+    background-size: cover;"
+    data-wow-delay="0.1s">
+
+
+    <div class="overlay"
+    style="
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+    z-index: 1; /* Ensure the overlay sits on top of the background image */
+    "
+    id="my_overlay">
+    </div> 
+    
+    {% comment %} <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-12" style="height: 600px;"> <!-- Set a fixed height for the map container -->
+                <div width: 100%; height: 100%; id="map" style="width: 100%; height: 100%;z-index: 1;"></div> <!-- Set the map container to fill its parent -->
+            </div>
+        </div>
+    </div> {% endcomment %}
+
+    
+    </div>
+</div>
+
+
+
+
+
+<div class="container mt-5">
+    <div class="row g-12">
+        {% for m in missing %}
+            <div class="col-md-6 wow slideInUp" data-wow-delay="0.1s">
+                <div class="blog-item bg-light rounded overflow-hidden">
+                    <div class="blog-img position-relative overflow-hidden" style="height: 285px;">
+                        <img  class="img-fluid" src="{{m.image.url}}" alt="">
+                        <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">{{m.title}}</a>
+                    </div>
+                    <div class="p-4">
+                        <div class="d-flex mb-3">
+                            <small class="me-3"><i class="far fa-user text-primary me-2"></i>{{m.user_id.first_name}} {{m.user_id.last_name}}</small>
+                            <small><i class="far fa-calendar-alt text-primary me-2"></i>{{m.created_at}}</small>
+                        </div>
+                        <h4 class="mb-3">Dog Name: {{m.dog_name}}</h4>
+                        <p>{{m.description}}</p>
+                        <p>Place: {{m.place}}</p>
+                        <a class="text-uppercase" href="{% url "home.missing_details" m.id %}">More Details<i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+</div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

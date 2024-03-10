@@ -14,7 +14,7 @@ Admin Dashboard
 {% block content %}
 <section class="section">
 
-    <div class="card author-box">
+    <div class="card author-box" style="width: 50%; margin: 0 auto;">
         <div class="card-body">
           <div class="author-box-center">
             <img alt="image" style="object-fit: cover; width: 100px; height: 100px;" src=" {% if pro.profile_pic  %}
@@ -24,10 +24,8 @@ Admin Dashboard
             <div class="clearfix"></div>
             <div class="author-box-name">
               <h5>{{pro.first_name}} {{pro.last_name}}</h5>
+              <div  class="author-box-description">{{pro.username}}<br>{{pro.role}}</div>
             </div>
-            <div  class="author-box-description">{{pro.username}}</div>
-            <div class="author-box-description">{{pro.role}}</div>
-          </div>
           <div class="text-center">
             <div class="author-box-description">
               {{pro.place}}
@@ -44,9 +42,6 @@ Admin Dashboard
             </a>
             <a href="#" class="btn btn-social-icon mr-1 btn-twitter">
               <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="btn btn-social-icon mr-1 btn-github">
-              <i class="fab fa-github"></i>
             </a>
             <a href="#" class="btn btn-social-icon mr-1 btn-instagram">
               <i class="fab fa-instagram"></i>

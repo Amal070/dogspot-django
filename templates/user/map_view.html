@@ -179,7 +179,7 @@ margin-top: -50px;">
     {% comment %} console.log('{{map.title}}') {% endcomment %}
         var mymarker = L.marker([{{map.latitude}}, {{map.longitude}}]).addTo(map);
         {% comment %} mymarker.bindPopup('{{map.title}} '+ mymarker.getLatLng()) {% endcomment %}
-        mymarker.bindPopup(` <a href="https://www.tcsion.com/hub/national-qualifier-test/" style="text-decoration: none;">
+        mymarker.bindPopup(` <a href="{% url "home.dogspot_list" map.id %}" style="text-decoration: none;">
             <div style="display: flex;justify-content: space-around;">
                 <img alt="image" src="{{map.dog_pics_set.all.0.image.url}}" class="" style="width: 70px; height: 70px; border-radius: 50%;" data-toggle="tooltip" title="" data-original-title="Dog image">
                 <div style="padding-left: 16px;color:black;">

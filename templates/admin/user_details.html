@@ -13,7 +13,7 @@ Admin Dashboard
 {% block content %}
 <section class="section">
 
-    <div class="card author-box">
+    <div class="card author-box" style="width: 50%; margin: 0 auto;">
         <div class="card-body">
           <div class="author-box-center">
             <img alt="image" style="object-fit: cover; width: 100px; height: 100px;" src=" {% if user.profile_pic  %}
@@ -23,8 +23,9 @@ Admin Dashboard
             <div class="clearfix"></div>
             <div class="author-box-name">
               <h5>{{user.first_name}} {{user.last_name}}</h5>
+              <div  class="author-box-description">{{user.username}}</div>
             </div>
-            <div  class="author-box-description">{{user.username}}</div>
+            
           </div>
           <div class="text-center">
             <div class="author-box-description">
