@@ -10,61 +10,79 @@
 
         {% comment %} {% if request.resolver_match.url_name == 'admin.dashboard' %} active {% endif %} {% endcomment %}
 
-        <li class="dropdown active">
+        <li class="dropdown {% if request.resolver_match.url_name == 'admin.dashboard' %} active {% endif %}">
             <a href="{% url "admin.dashboard" %}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
         </li>
 
-        <li class="dropdown active">
+        <li class="dropdown {% if request.resolver_match.url_name == 'admin.profile' or request.resolver_match.url_name == 'admin.profile_edit' %} active {% endif %}">
             <a href="{% url "admin.profile" %}" class="nav-link"><i data-feather="user"></i><span>Profile</span></a>
         </li>
 
-        <li class="dropdown ">
+        <li class="dropdown {% if request.resolver_match.url_name == 'admin.users' or request.resolver_match.url_name == 'admin.user_details' %} active {% endif %}">
             <a href="{% url "admin.users" %}" class="nav-link"><i data-feather="users"></i><span>Users</span></a>
         </li>
 
-        <li class="dropdown ">
-            <a href="#" class="nav-link"><i data-feather="map"></i><span>Map</span></a>
+        <li class="dropdown {% if request.resolver_match.url_name == 'admin.map_view' %} active {% endif %}">
+            <a href="{% url "admin.map_view" %}" class="nav-link"><i data-feather="map"></i><span>Map</span></a>
         </li>
 
 
-        <li class="dropdown">
+        <li class="dropdown {% if request.resolver_match.url_name == 'admin.missings_all' or request.resolver_match.url_name == 'admin.missings_your' or request.resolver_match.url_name == 'admin.missings_form' or request.resolver_match.url_name == 'admin.missing_details_all' or request.resolver_match.url_name == 'admin.missing_details_your' or request.resolver_match.url_name == 'admin.missing_edit' or request.resolver_match.url_name == 'admin.comment_a' or request.resolver_match.url_name == 'admin.report_all' or request.resolver_match.url_name == 'admin.comment_y' or request.resolver_match.url_name == 'admin.report_your' %} active {% endif %}">
             <a href="#" class="menu-toggle nav-link has-dropdown">
                 <i data-feather="alert-triangle"></i><span>Missing case</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{% url "admin.missings_all" %}">All Cases</a></li>
-                <li><a class="nav-link" href="{% url "admin.missings_your" %}">Your Cases</a></li>
-                <li><a class="nav-link" href="{% url "admin.missings_form" %}">Add Cases</a></li>
+                <li class="{% if request.resolver_match.url_name == 'admin.missings_all' or request.resolver_match.url_name == 'admin.missing_details_all' or request.resolver_match.url_name == 'admin.comment_a' or request.resolver_match.url_name == 'admin.report_all' %} active {% endif %}">
+                    <a class="nav-link" href="{% url "admin.missings_all" %}">All Cases</a>
+                </li>
+                <li class="{% if request.resolver_match.url_name == 'admin.missings_your' or request.resolver_match.url_name == 'admin.missing_details_your' or request.resolver_match.url_name == 'admin.missing_edit' or request.resolver_match.url_name == 'admin.comment_y' or request.resolver_match.url_name == 'admin.report_your' %} active {% endif %}">
+                    <a class="nav-link" href="{% url "admin.missings_your" %}">Your Cases</a>
+                </li>
+                <li class="{% if request.resolver_match.url_name == 'admin.missings_form' %} active {% endif %}">
+                    <a class="nav-link" href="{% url "admin.missings_form" %}">Add Cases</a>
+                </li>
             </ul>
         </li>
 
-        <li class="dropdown">
+        <li class="dropdown {% if request.resolver_match.url_name == 'admin.adoption_form' or request.resolver_match.url_name == 'admin.adoption_view' or request.resolver_match.url_name == 'admin.adoption_all_view' or request.resolver_match.url_name == 'admin.adoption_snd_view' or request.resolver_match.url_name == 'admin.adoption_details' or request.resolver_match.url_name == 'admin.edit_adoption' or request.resolver_match.url_name == 'admin.adoption_all_details' or request.resolver_match.url_name == 'admin.request_list' or request.resolver_match.url_name == 'admin.request_profile' %} active {% endif %}">
             <a href="#" class="menu-toggle nav-link has-dropdown" style="padding-left: 15px;">
                 <i class="fas fa-hand-holding-heart"></i><span>Adoption</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{% url 'admin.adoption_form' %}">Add Adoption</a></li>
-                <li><a class="nav-link" href="{% url "admin.adoption_view" %}">Your Adoptions</a></li>
-                <li><a class="nav-link" href="{% url "admin.adoption_all_view" %}">All Adoptions</a></li>
-                <li><a class="nav-link" href="{% url "admin.adoption_snd_view" %}">Request Sended </a></li>
+                <li class="{% if request.resolver_match.url_name == 'admin.adoption_form' %} active {% endif %}">
+                    <a class="nav-link" href="{% url 'admin.adoption_form' %}">Add Adoption</a>
+                </li>
+                <li class="{% if request.resolver_match.url_name == 'admin.adoption_view' or request.resolver_match.url_name == 'admin.adoption_details' or request.resolver_match.url_name == 'admin.edit_adoption' %} active {% endif %}">
+                    <a class="nav-link" href="{% url "admin.adoption_view" %}">Your Adoptions</a>
+                </li>
+                <li class="{% if request.resolver_match.url_name == 'admin.adoption_all_view' or request.resolver_match.url_name == 'admin.adoption_all_details' %} active {% endif %}">
+                    <a class="nav-link" href="{% url "admin.adoption_all_view" %}">All Adoptions</a>
+                </li>
+                <li class="{% if request.resolver_match.url_name == 'admin.adoption_snd_view' or request.resolver_match.url_name == 'admin.request_list' or request.resolver_match.url_name == 'admin.request_profile' %} active {% endif %}">
+                    <a class="nav-link" href="{% url "admin.adoption_snd_view" %}">Request Sended </a>
+                </li>
             </ul>
         </li>
         
-        <li class="dropdown">
+        <li class="dropdown {% if request.resolver_match.url_name == 'admin.report_list' %} active {% endif %}">
             <a href="#" class="menu-toggle nav-link has-dropdown">
                 <i data-feather="thumbs-down"></i><span>Reports</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="#">Dogspot</a></li>
-                <li><a class="nav-link" href="{% url "admin.report_list" %}">Missing case</a></li>
+                <li class="">
+                    <a class="nav-link" href="#">Dogspot</a>
+                </li>
+                <li class="{% if request.resolver_match.url_name == 'admin.report_list' %} active {% endif %}">
+                    <a class="nav-link" href="{% url "admin.report_list" %}">Missing case</a>
+                </li>
             </ul>
         </li>
 
 
-        <li class="dropdown">
+        {% comment %} <li class="dropdown">
             <a href="#" class="menu-toggle nav-link has-dropdown"><i
                     data-feather="briefcase"></i><span>Widgets</span></a>
             <ul class="dropdown-menu">
                 <li><a class="nav-link" href="#">Chart Widgets</a></li>
                 <li><a class="nav-link" href="#">Data Widgets</a></li>
             </ul>
-        </li>
+        </li> {% endcomment %}
     </ul>
 </aside>

@@ -44,6 +44,6 @@ class User(AbstractUser):
     latitude=models.CharField(max_length=255, null=True, blank=True)
     longitude=models.CharField(max_length=255, null=True, blank=True)
     willing_to_adopt=models.CharField(max_length=50,default='no')
-    state=models.CharField(max_length=255, choices=STATUS_CHOICE, null=True, blank=True)
+    state=models.CharField(max_length=255, choices=STATE_CHOICE, null=True, blank=True)
     district=models.CharField(max_length=255, choices=DISTRICT_CHOICES, null=True, blank=True)
     place=models.CharField(max_length=255, null=True, blank=True)

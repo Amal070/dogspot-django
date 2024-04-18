@@ -4,7 +4,7 @@ from admin_panel.views import *
 
 urlpatterns = [
     path('dashboard/', dashboard, name='admin.dashboard'),
-    path('map/', map, name='admin.map'),
+    path('map-view/', map_view, name='admin.map_view'),
     path('user/',users,name='admin.users'),
     path('user_details/<pk>',user_details,name='admin.user_details'),
     path('user_search/',user_search,name='admin.user_search'),

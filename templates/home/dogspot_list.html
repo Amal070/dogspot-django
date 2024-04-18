@@ -153,7 +153,11 @@
                 
             </div>
             <div class="user-info">
-            <img src="{{map_data.user.profile_pic.url}}" alt="User Thumbnail">
+              {% if map_data.user.profile_pic.url %}
+                <img src="{{map_data.user.profile_pic.url}}" alt="User Thumbnail">
+                {% else %}
+                <img src="{% static "default_profile_pic.png" %}" alt="User Thumbnail">
+              {% endif %}
             <div>
                 <p>{{map_data.user.first_name}} {{map_data.user.last_name}}</p>
                 <p style="font-size: 12px;">{{map_data.email}}</p>

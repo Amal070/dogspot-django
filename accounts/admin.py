@@ -6,10 +6,10 @@ from accounts.models import User
 
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ['username', 'email', 'role', 'status', 'latitude', 'longitude', 'place']  # Add extra fields here
+    list_display = ['username', 'email', 'role', 'status', 'latitude', 'longitude', 'place', 'profile_pic']  # Add extra fields here
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('email', 'first_name', 'last_name', 'role', 'status', 'latitude', 'longitude', 'place')}),  # Add agin extra fields here
+        ('Personal info', {'fields': ('email', 'first_name', 'last_name', 'role', 'status', 'latitude', 'longitude', 'place', 'profile_pic')}),  # Add agin extra fields here
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
