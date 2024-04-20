@@ -17,7 +17,9 @@ from user.models import Map_Details
 # Create your views here.
 @login_required
 def dashboard(request):
-    return render(request, 'admin/dashboard.html')
+    users_count=User.objects.all().exclude(role='admin').count()
+    context = {'users_count' : users_count}
+    return render(request, 'admin/dashboard.html', context)
 
 @login_required
 def users(request):

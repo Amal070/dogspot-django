@@ -1,6 +1,8 @@
 
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
 Admin Dashboard
 {% endblock %}
@@ -17,9 +19,18 @@ Admin Dashboard
     <div class="card author-box" style="width: 50%; margin: 0 auto;">
         <div class="card-body">
           <div class="author-box-center">
-            <img alt="image" style="object-fit: cover; width: 100px; height: 100px;" src=" {% if pro.profile_pic  %}
-            {{pro.profile_pic.url}}
-            {% endif %}" class="rounded-circle author-box-picture">
+
+            {% if pro.profile_pic  %}
+                <img alt="image" style="object-fit: cover; width: 100px; height: 100px;" 
+                src=" {% if pro.profile_pic  %} {{pro.profile_pic.url}} {% endif %}" 
+                class="rounded-circle author-box-picture">
+                {% else %}
+                <img alt="image" style="object-fit: cover; width: 100px; height: 100px;" 
+                src="{% static 'default_profile_pic.png' %}" 
+                class="rounded-circle author-box-picture">
+                
+            {% endif %}
+            
            
             <div class="clearfix"></div>
             <div class="author-box-name">

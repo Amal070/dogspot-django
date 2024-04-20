@@ -27,6 +27,19 @@
         </li>
 
 
+        <li class="dropdown ">
+            <a href="#" class="menu-toggle nav-link has-dropdown">
+                <i data-feather="map-pin"></i><span>Add Dogspot</span></a>
+            <ul class="dropdown-menu">
+                <li class="">
+                    <a class="nav-link" href="#">Add</a>
+                </li>
+                <li class="">
+                    <a class="nav-link" href="#">Your spot</a>
+                </li>
+            </ul>
+        </li>
+
         <li class="dropdown {% if request.resolver_match.url_name == 'admin.missings_all' or request.resolver_match.url_name == 'admin.missings_your' or request.resolver_match.url_name == 'admin.missings_form' or request.resolver_match.url_name == 'admin.missing_details_all' or request.resolver_match.url_name == 'admin.missing_details_your' or request.resolver_match.url_name == 'admin.missing_edit' or request.resolver_match.url_name == 'admin.comment_a' or request.resolver_match.url_name == 'admin.report_all' or request.resolver_match.url_name == 'admin.comment_y' or request.resolver_match.url_name == 'admin.report_your' %} active {% endif %}">
             <a href="#" class="menu-toggle nav-link has-dropdown">
                 <i data-feather="alert-triangle"></i><span>Missing case</span></a>

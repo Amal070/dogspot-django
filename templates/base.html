@@ -78,12 +78,26 @@
                             {% comment %} <i data-feather="user"></i> {% endcomment %}
                             <!-- Render user profile picture with rounded style and fit within 30x30 pixels -->
                             
-                            <img src="{% static request.user.profile_pic.name %}" 
-                            alt="logo"
-                            style="border-radius: 50%; /* Make the image round */
-                                object-fit: cover; /* Fit the image within the specified dimensions */"
-                            height="30px"
-                            width="30px">
+
+                            {% if request.user.profile_pic.url %}
+
+                                <img src="{{ request.user.profile_pic.url }}" 
+                                alt="logo"
+                                style="border-radius: 50%; /* Make the image round */
+                                    object-fit: cover; /* Fit the image within the specified dimensions */"
+                                height="30px"
+                                width="30px">
+
+                            {% else %}
+                                <img src="{% static request.user.profile_pic.name %}" 
+                                alt="logo"
+                                style="border-radius: 50%; /* Make the image round */
+                                    object-fit: cover; /* Fit the image within the specified dimensions */"
+                                height="30px"
+                                width="30px">
+                                
+                            {% endif %}
+                           
 
                             <span class="d-sm-none d-lg-inline-block"></span>
                         </a>
