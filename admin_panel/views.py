@@ -67,6 +67,21 @@ def map_view(request):
 
 
 @login_required
+def dogspot_marker_map(request):
+    latlng = geocoder.ip('me')
+    # if request.user.is_authenticated: 
+    #     print(request.user,'User already logged in')
+    #     return render(request,'admin/dashboard.html') 
+    # else:
+    print(latlng)
+    print(latlng.ip)
+    print(latlng.lat)
+    print(latlng.lng)
+    map_db = Map_Details.objects.all()
+    context = {'lat':latlng.lat, 'lng':latlng.lng, 'map_db' : map_db}
+    return render(request, 'admin/dogspot_marker_map.html', context)
+
+@login_required
 def missings_all(request):
     missing=missing_case.objects.all()
 

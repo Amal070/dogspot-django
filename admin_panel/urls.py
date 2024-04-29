@@ -5,6 +5,7 @@ from admin_panel.views import *
 urlpatterns = [
     path('dashboard/', dashboard, name='admin.dashboard'),
     path('map-view/', map_view, name='admin.map_view'),
+    path('map-marker/', dogspot_marker_map, name='admin.map_marker'),
     path('user/',users,name='admin.users'),
     path('user_details/<pk>',user_details,name='admin.user_details'),
     path('user_search/',user_search,name='admin.user_search'),
