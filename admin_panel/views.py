@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.http import JsonResponse
 
 from django.contrib import messages
 
@@ -10,7 +11,7 @@ from accounts.models import User
 from user.models import adoption,adoption_request
 from django.contrib.auth.decorators import login_required
 
-from user.models import Map_Details
+from user.models import Map_Details, Dog_Pics
 
 
 
@@ -80,6 +81,125 @@ def dogspot_marker_map(request):
     map_db = Map_Details.objects.all()
     context = {'lat':latlng.lat, 'lng':latlng.lng, 'map_db' : map_db}
     return render(request, 'admin/dogspot_marker_map.html', context)
+
+
+from PIL import Image, ImageFilter # for image compression
+from io import BytesIO # for image compression
+from django.core.files.base import ContentFile #for image compression
+# image compression function
+def image_compressor(image_file, quality=90):
+    try:
+        # Open the image using PIL
+        img = Image.open(image_file)
+        print(f'image name: {image_file} is compressing.........')
+
+        # Resize the image (optional, if you want to resize)
+        width, height = img.size
+        # img = img.resize((width, height), Image.ANTIALIAS)
+        img = img.resize((width, height), ImageFilter.ANTIALIAS)
+
+        # Convert image to bytes with compression quality
+        img_bytes = BytesIO()
+        img.save(img_bytes, format='JPEG', quality=quality)
+
+        # Reset the file pointer to the beginning
+        img_bytes.seek(0)
+
+        # Create a ContentFile object from the compressed image data
+        compressed_image = ContentFile(img_bytes.read(), name=image_file.name)
+
+        return compressed_image # ready for saving to database in "ImageField" field
+    
+    except:
+        print('image compression failed.....so real image returned for saving')
+        return image_file
+
+@login_required
+def add_dogspot(request, lat, lng):
+    if request.method == 'POST':
+        length = request.POST.get('length')
+        place_name = request.POST.get('place_name')
+        description = request.POST.get('description')
+        no_of_dogs = request.POST.get('no_of_dogs')
+        behaviour = request.POST.get('behaviour')
+        km = request.POST.get('km')
+        # images = request.FILES.getlist('images1')
+
+        print('place_name', place_name)
+        print('description', description)
+        print('no_of_dogs', no_of_dogs)
+        print('behaviour', behaviour)
+        print('km:', km)
+
+        #  Aggressive, Biting, Social, Friendly, Barking, Chasing, Territorial, Illness 
+        zone = {}
+        # Red Zone (Aggressive, Biting, Territorial, Illness):
+        if 'Aggressive' in behaviour or 'Biting' in behaviour or 'Territorial' in behaviour or 'Illness' in behaviour:
+            print( 'Red Zone (Aggressive, Biting, Territorial, Illness):..................')
+
+            zone['zone'] = 'red'
+            zone['radius_color'] = '#FF0000'
+            zone['radius_color_hexcode'] = '#FF0000'
+
+        # Yellow Zone (Barking, Chasing):
+        elif 'Barking' in behaviour or 'Chasing' in behaviour:
+            print('Yellow Zone (Barking, Chasing):..................')
+
+            zone['zone'] = 'yellow'
+            zone['radius_color'] = '#FFD326'
+            zone['radius_color_hexcode'] = '#FFD326'
+
+        # Green Zone (Social, Friendly)
+        else:
+            print(' Green Zone (Social, Friendly)..................')
+
+            zone['zone'] = 'green'
+            zone['radius_color'] = '#2AAD27'
+            zone['radius_color_hexcode'] = '#2AAD27'
+
+        print('Zone dictionary:', zone)
+        print('Zone:', zone['zone'])
+        print('radius_color:', zone['radius_color'])
+        print('radius_color_hexcode:', zone['radius_color_hexcode'])
+        
+
+        if not Map_Details.objects.filter(latitude=lat,longitude=lng).exists():
+            map_obj = Map_Details.objects.create(
+                email = request.user.username,
+                user = request.user,
+                place_name = place_name,
+                description = description,
+                no_of_dogs = no_of_dogs,
+                behaviour = behaviour,
+                longitude = lng,
+                latitude = lat,
+                zone = zone['zone'],
+                radius_color=zone['radius_color'],
+                radius_color_hexcode=zone['radius_color_hexcode'],
+                km_distance=km
+            )
+            print('map details point created successfully')
+
+            for file_num in range(0, int(length)):
+                image = request.FILES.get(f'images{file_num}')
+                print('image : ', image)
+                Dog_Pics.objects.create(
+                    map_id = map_obj,
+                    # image = image
+                    image = image_compressor(image) # calling a image compression function
+                )
+                print('image db created created')
+
+        else:
+            # messages.error(request, 'Map Location already added by other user', extra_tags='map_point_already_exist_error')
+            print('Map Location already added by other user')
+            return JsonResponse({'point_exist': True},safe=False)
+
+    print(request.user, 'usertttttttttttt')
+
+    return render(request, 'admin/add_dogspot.html', {'lat':lat, 'lng':lng})
+
+
 
 @login_required
 def missings_all(request):

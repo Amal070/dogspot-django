@@ -107,7 +107,7 @@
                         
                             <a href="{% url 'user.profile' %}" class="dropdown-item has-icon text-danger"> <i
                                 class="fas fa-user"></i>
-                                {{request.user.username}}
+                                {{request.user.username|cut:"@gmail.com" }}
                             </a>
                             <a href="{% url 'home.index' %}" class="dropdown-item has-icon text-danger"> <i
                                 class="fas fa-home"></i>
