@@ -228,7 +228,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 {% comment %} sweet alert2 cdn {% endcomment %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.14/dist/sweetalert2.all.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+{% comment %} <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script> {% endcomment %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -315,8 +315,9 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
         // Fetch the image URL from Django and add it to FilePond
         {% if single_map_object.dog_pics_set %}
+        //console.log('{{ request.scheme }}://{{ request.get_host }}{{data.image.url }}')
             {% for data in single_map_object.dog_pics_set.all  %}
-                fetch('http://127.0.0.1:8000{{data.image.url }}')
+                fetch('{{ request.scheme }}://{{ request.get_host }}{{data.image.url }}')
                 .then(response => response.blob())
                 .then(blob => {
                     console.log('Fetched blob:', blob);
