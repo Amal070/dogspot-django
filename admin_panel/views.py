@@ -199,7 +199,12 @@ def add_dogspot(request, lat, lng):
 
     return render(request, 'admin/add_dogspot.html', {'lat':lat, 'lng':lng})
 
-
+@login_required
+def dogspot_list(request):
+    map_data = Map_Details.objects.filter(user=request.user.id)
+    # print(map_data, request.user.role)
+    context = {'map_data' : map_data }
+    return render(request, 'admin/dogspot_list.html', context)
 
 @login_required
 def missings_all(request):

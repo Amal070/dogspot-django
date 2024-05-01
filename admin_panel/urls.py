@@ -7,6 +7,7 @@ urlpatterns = [
     path('map-view/', map_view, name='admin.map_view'),
     path('map-marker/', dogspot_marker_map, name='admin.map_marker'),
     path('add-dogspot/<str:lat>/<str:lng>/', add_dogspot, name='admin.add_dogspot'),
+    path('dogspot_list/', dogspot_list, name='admin.dogspot_list'),
     path('user/',users,name='admin.users'),
     path('user_details/<pk>',user_details,name='admin.user_details'),
     path('user_search/',user_search,name='admin.user_search'),
