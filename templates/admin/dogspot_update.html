@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-User Dashboard
+Admin Dashboard
 {% endblock %}
 
 {% block sidebar %}
-{% include 'user/sidebar.html' %}
+{% include 'admin/sidebar.html' %}
 {% endblock %}
 
 {% block styles %}
@@ -158,7 +158,7 @@ User Dashboard
                     <div class="card-footer text-right">
                         <a href="#" class="btn btn-danger" id="delete_Btn" data-toggle="modal" data-target="#delete_model_form">Delete</a>
                         <button class="btn btn-primary" id="add_Btn">Update</button>
-                        <a href="{% url "user.dogspot_list" %}" class="btn btn-secondary">Back</a>
+                        <a href="{% url "admin.dogspot_list" %}" class="btn btn-secondary">Back</a>
                     </div>
                 </form>
             </div>
@@ -185,9 +185,9 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
     <div class="modal-footer bg-whitesmoke br">
         
-        <form action="{% url "user.dogspot_delete" %}" method="post">
+        <form action="{% url "admin.dogspot_delete" %}" method="post">
             {% csrf_token %}
-            <input type="text" name="delete_id" value="{{single_map_object.id}}">
+            <input type="hidden" name="delete_id" value="{{single_map_object.id}}">
             <button type="submit" id="model_form_delete_btn" class="btn btn-primary">Confirm</button>
         </form>
 
@@ -315,8 +315,8 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
         // Fetch the image URL from Django and add it to FilePond
         {% if single_map_object.dog_pics_set %}
-        //console.log('{{ request.scheme }}://{{ request.get_host }}{{data.image.url }}')
             {% for data in single_map_object.dog_pics_set.all  %}
+                //console.log('{{ request.scheme }}://{{ request.get_host }}{{data.image.url }}')
                 fetch('{{ request.scheme }}://{{ request.get_host }}{{data.image.url }}')
                 .then(response => response.blob())
                 .then(blob => {
@@ -367,7 +367,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
         $.ajax({
             type:'POST',
-            url: '{% url "user.dogspot_update" %}',
+            url: '{% url "admin.dogspot_update" %}',
             data:formData,
             cache:false,
             processData:false,
@@ -386,7 +386,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     icon: 'error',
                     title: 'Oops...',
                     text: ' Map Location already added by other user ',
-                    footer: '<a href="{% url 'user.static_dogspot_marker_map' %}">Add New Point</a>'
+                    footer: '<a href="{% url 'admin.map_marker' %}">Add New Point</a>'
                 })
                
                 $("#add_Btn").removeClass("btn-progress disabled"); // removing button progress and disabled
@@ -410,13 +410,13 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     icon: 'success',
                     title: 'Thank you for your contribution',
                     text: ' Dogspot Successfully Added ',
-                    footer: '<a href="{% url 'user.static_dogspot_marker_map' %}">Add New Point</a>'
+                    footer: '<a href="{% url 'admin.map_marker' %}">Add New Point</a>'
                 })
                 
                 // when form is success then redirect to map-marker view in after 5-seconds
                 setTimeout(
                     function(){
-                        window.location.href = '{% url 'user.static_dogspot_marker_map' %}' // redirecting to map-marker view
+                        window.location.href = '{% url 'admin.map_marker' %}' // redirecting to map-marker view
                         //alert('hai');
                 }, 5000); {% endcomment %}
 

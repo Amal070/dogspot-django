@@ -89,7 +89,7 @@
                                 width="30px">
 
                             {% else %}
-                                <img src="{% static request.user.profile_pic.name %}" 
+                                <img src="{% static "default_profile_pic.png" %}"
                                 alt="logo"
                                 style="border-radius: 50%; /* Make the image round */
                                     object-fit: cover; /* Fit the image within the specified dimensions */"
@@ -107,14 +107,14 @@
                         
                             <a href="{% url 'user.profile' %}" class="dropdown-item has-icon text-danger"> <i
                                 class="fas fa-user"></i>
-                                {{request.user.username}}
+                                {{request.user.username|cut:"@gmail.com" }}
                             </a>
                             <a href="{% url 'home.index' %}" class="dropdown-item has-icon text-danger"> <i
                                 class="fas fa-home"></i>
                                 Home
                             </a>
 
-                            <a href="{% url 'home.index' %}" class="dropdown-item has-icon text-danger"> <i
+                            <a href="{% if request.user.role == 'admin' %}{% url 'admin.profile' %}{% else %}{% url 'user.profile' %}{% endif %}" class="dropdown-item has-icon text-danger"> <i
                                 class="fas fa-user"></i>
                                 Profile
                             </a>

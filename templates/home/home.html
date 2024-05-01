@@ -436,7 +436,11 @@ crossorigin=""/>
     {% comment %} var map = L.map('map', {fullscreenControl: true}).setView([9.772655, 76.519711], 12); // python {% endcomment %}
 
     {% if request.user.is_authenticated %}
-        var map = L.map('map', {fullscreenControl: true}).setView([{{request.user.latitude}}, {{request.user.longitude}}], 12); // python
+        {% if request.user.latitude and request.user.longitude %}
+            var map = L.map('map', {fullscreenControl: true}).setView([{{request.user.latitude}}, {{request.user.longitude}}], 12); // python
+        {% else %}
+            var map = L.map('map', {fullscreenControl: true}).setView([{{lat}}, {{lng}}], 12); // python
+        {% endif %}
     {% else %}
         {% comment %} var map = L.map('map', {fullscreenControl: true}).setView([9.772655, 76.519711], 12); // python {% endcomment %}
         var map = L.map('map', {fullscreenControl: true}).setView([{{lat}}, {{lng}}], 12); // python

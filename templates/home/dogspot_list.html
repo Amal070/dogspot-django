@@ -163,6 +163,9 @@
                 <p>{{map_data.user.first_name}} {{map_data.user.last_name}}</p>
                 <p style="font-size: 12px;">{{map_data.email}}</p>
                 <p style="font-size: 12px;">{{map_data.datetime}}</p>
+                {% if map_data.user.role == 'admin' %}
+                  <p style="font-size: 12px;">- By Admin -</p>
+                {% endif %}
             </div>
             </div>
         </div>
