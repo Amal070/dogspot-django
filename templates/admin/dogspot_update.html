@@ -185,9 +185,9 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
     <div class="modal-footer bg-whitesmoke br">
         
-        <form action="{% url "user.dogspot_delete" %}" method="post">
+        <form action="{% url "admin.dogspot_delete" %}" method="post">
             {% csrf_token %}
-            <input type="text" name="delete_id" value="{{single_map_object.id}}">
+            <input type="hidden" name="delete_id" value="{{single_map_object.id}}">
             <button type="submit" id="model_form_delete_btn" class="btn btn-primary">Confirm</button>
         </form>
 

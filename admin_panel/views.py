@@ -347,6 +347,43 @@ def dogspot_update(request):
 
     else:
         return redirect(dogspot_list)
+    
+# dogspot delete
+@login_required
+def dogspot_delete(request):
+    if request.method == 'POST':
+        object_id = request.POST.get('delete_id')
+        if Map_Details.objects.filter(user=request.user.id, id=object_id).exists():
+            map_object = Map_Details.objects.get(user=request.user.id, id=object_id)
+
+            print('Place Name:', map_object.place_name)
+
+
+            dog_pics_db = map_object.dog_pics_set.all() # all child images of "Map_Details" table (reverse relationship)
+
+            # deleting all "old-images" from media folder
+            for dog_pics_row in dog_pics_db:
+
+                # if len(request.FILES) != 0:
+                if dog_pics_row.image and os.path.exists(dog_pics_row.image.path):
+                    os.remove(dog_pics_row.image.path) # removing the "old-image" from media folder
+                    print('old image removed')
+
+            messages.success(request, map_object.place_name , extra_tags='delete_msg')
+        
+            dog_pics_db.delete() # deleting all image url objects from database
+            print('All Dog_pics db deleted sucessfully')
+            map_object.delete() # deleting map object form database
+            print('Map_Details db deleted sucessfully')
+
+
+            return redirect('admin.dogspot_list')
+    
+        else:
+            return redirect('admin.dashboard')
+    
+    else:
+        return redirect('admin.dashboard')
 
 @login_required
 def missings_all(request):
