@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+    {% comment %} <h1>Report list<h1>
+
+        <table border="5">
+            <thead>
+                <tr>
+                    <th>Reporter</th>
+                    <th>Case No</th>
+                    <th>Category</th>
+                    <th>Summery</th>
+                    <th>Date</th>
+                    <th>Delete</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for l in li %}
+                <tr>
+                    <td>{{ l.user_id }}</td>
+                    <td>case-{{ l.missing_id.id }}</td>
+                    <td>{{ l.category }}</td>
+                    <td>{{ l.report_summery }}</td>
+                    <td>{{ l.date }}</td>
+                    
+                    <td><a href="{% url 'admin.report_delete_l' l.id %}" onclick="return confirm('Are you sure you want to delete this report?')"><button>Delete</button></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table> {% endcomment %}
+
+
+
+
+        <h1>Report list<h1>
+            <div class="card">
+              <div class="card-body">
+                  <table class="table" style="size: 5; border: 2px;;">
+                    <thead style="font-size:xx-large;">
+                      <tr>
+                        <th scope="col">Reporter</th>
+                        <th scope="col">Place</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Summery</th>
+                        <th scope="col">Date</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                  <tbody style="font-size: large;">
+                      {% for l in li %}
+                      <tr>
+                          <td>{{ l.user_id }}</td>
+                          <td>Place-{{ l.map_id.place_name }}</td>
+                          <td>{{ l.category }}</td>
+                          <td>{{ l.report_summery }}</td>
+                          <td>{{ l.date }}</td>
+                          <td><a href="{% url "admin.dogspot_report_delete" l.id %}" onclick="return confirm('Are you sure you want to delete this report?')"><button class="btn btn-primary">Delete</button></a></td>
+                        </tr>
+                      {% endfor %}
+                  </tbody>
+      
+              </table>
+          </div>
+        </div>
+
+
+    </section>
+
+    {% endblock %}

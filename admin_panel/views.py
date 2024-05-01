@@ -10,7 +10,7 @@ from accounts.models import User
 from user.models import adoption,adoption_request
 from django.contrib.auth.decorators import login_required
 
-from user.models import Map_Details
+from user.models import Map_Details,dogspot_report
 
 
 
@@ -18,7 +18,13 @@ from user.models import Map_Details
 @login_required
 def dashboard(request):
     users_count=User.objects.all().exclude(role='admin').count()
-    context = {'users_count' : users_count}
+    total_zones = Map_Details.objects.count()
+    red_zones = Map_Details.objects.filter(zone='red').count()
+    yellow_zones = Map_Details.objects.filter(zone='yellow').count()
+    green_zones = Map_Details.objects.filter(zone='green').count()
+    missing_cases = missing_case.objects.count()
+    total_adoptions = adoption.objects.count()
+    context = {'users_count' : users_count,'total_zones':total_zones,'red_zones':red_zones,'yellow_zones':yellow_zones,'green_zones': green_zones,'missing_cases':missing_cases,'total_adoptions':total_adoptions}
     return render(request, 'admin/dashboard.html', context)
 
 @login_required
@@ -64,6 +70,16 @@ def map_view(request):
     
     context = {'lat':latlng.lat, 'lng':latlng.lng, 'map_db' : map_db}
     return render(request, 'admin/map_view.html', context)
+
+@login_required
+def dogspot_report_list(request):
+    li=dogspot_report.objects.all()
+    return render(request,'admin/dogspot_report_list.html',{'li':li})
+
+def dogspot_report_delete(request,pk):
+    dele=dogspot_report.objects.get(id=pk)
+    dele.delete()
+    return redirect(dogspot_report_list)
 
 
 @login_required

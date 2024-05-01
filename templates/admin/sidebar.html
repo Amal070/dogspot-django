@@ -80,7 +80,7 @@
                 <i data-feather="thumbs-down"></i><span>Reports</span></a>
             <ul class="dropdown-menu">
                 <li class="">
-                    <a class="nav-link" href="#">Dogspot</a>
+                    <a class="nav-link" href="{% url "admin.dogspot_report_list" %}">Dogspot</a>
                 </li>
                 <li class="{% if request.resolver_match.url_name == 'admin.report_list' %} active {% endif %}">
                     <a class="nav-link" href="{% url "admin.report_list" %}">Missing case</a>

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 import geocoder
 
-from user.models import Map_Details
+from user.models import Map_Details,dogspot_report
 from user.models import missing_case
 from user.models import comment
 from user.models import missing_report
@@ -40,6 +40,14 @@ def dogspot_list(request,pk):
     # print(map_data, request.user.role)
     context = {'map_data' : map_data }
     return render(request, 'home/dogspot_list.html', context)
+
+def dogspot_rpt(request,pk):
+    if request.POST:
+        category=request.POST.get('category')
+        summery=request.POST.get('summery')
+        report_obj=dogspot_report(category=category,report_summery=summery,user_id=User.objects.get(id=request.user.id),map_id=Map_Details.objects.get(pk=pk))
+        report_obj.save()
+    return render(request,'home/dogspot_report.html')
 
 
 def donation(request):

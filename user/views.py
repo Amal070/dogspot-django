@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from user.models import Map_Details, Dog_Pics
+from user.models import Map_Details, Dog_Pics ,dogspot_report
 from django.contrib import messages
 
 from user.models import missing_case
@@ -32,9 +32,14 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def dashboard(request):
     user_count = User.objects.exclude(role = 'admin').count()
+    total_zones = Map_Details.objects.count()
+    red_zones = Map_Details.objects.filter(zone='red').count()
+    yellow_zones = Map_Details.objects.filter(zone='yellow').count()
+    green_zones = Map_Details.objects.filter(zone='green').count()
+
 
     print(user_count, 'testing')
-    context = {'user_count': user_count}
+    context = {'user_count': user_count ,'total_zones':total_zones,'red_zones':red_zones,'yellow_zones':yellow_zones,'green_zones':green_zones}
     return render(request, 'user/dashboard.html', context)
 
 # show all dogspot marker in map
@@ -380,6 +385,29 @@ def dogspot_delete(request):
 # def profile_update(request):
 #     return render(request, 'user/profile_update.html')
 
+def dogspot_rpt(request,pk):
+    if request.POST:
+        category=request.POST.get('category')
+        summery=request.POST.get('summery')
+        report_obj=dogspot_report(category=category,report_summery=summery,user_id=User.objects.get(id=request.user.id),map_id=Map_Details.objects.get(pk=pk))
+        report_obj.save()
+    return render(request,'user/dogspot_report.html')
+
+
+@login_required
+def dogspot_report_list(request):
+    li=dogspot_report.objects.filter(user_id=request.user.id)
+    return render(request,'user/dogspot_report_list.html',{'li':li})
+
+
+@login_required
+def dogspot_report_delete(request,pk):
+    dele=dogspot_report.objects.filter(user_id=request.user.id,id=pk)
+    dele.delete()
+    return redirect(dogspot_report_list)
+
+
+
 @login_required
 def settings(request):
     return render(request, 'user/profile.html')
@@ -484,6 +512,8 @@ def report_case(request,pk):
 def report_list(request):
     li=missing_report.objects.filter(user_id=request.user.id)
     return render(request,'user/report_list.html',{'li':li})
+
+
 
 @login_required
 def report_delete(request,pk):

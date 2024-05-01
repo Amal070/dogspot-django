@@ -51,6 +51,13 @@ class Dog_Pics(models.Model):
     map_id = models.ForeignKey(Map_Details, on_delete=models.CASCADE)
     image = models.ImageField(upload_to = 'images')
 
+class dogspot_report(models.Model):
+    category=models.CharField(max_length=250)
+    report_summery=models.CharField(max_length=250)
+    map_id=models.ForeignKey(Map_Details, on_delete=models.CASCADE)
+    date=models.DateField( auto_now=True, auto_now_add=False)
+    user_id=models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
+
 
 class missing_case(models.Model):
     dog_name=models.CharField(max_length=250,blank=True,null=True)

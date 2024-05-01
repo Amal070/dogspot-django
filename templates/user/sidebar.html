@@ -57,27 +57,13 @@
                 <li><a class="nav-link" href="{% url "user.received_list" %}">Request Recived </a></li>
             </ul>
         </li>
-        
-        <li class="dropdown">
-            <a href="{% url "user.report_list" %}" class="nav-link">
-                <i data-feather="thumbs-down"></i>
-                
-                <span>Reports</span></a>
-        </li>
-
-
-        
 
         <li class="dropdown">
-            <a href="#" class="nav-link"><i data-feather="settings"></i><span>Settings</span></a>
-        </li>
-
-       <li class="dropdown">
-            <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                    data-feather="briefcase"></i><span>Widgets</span></a>
+            <a href="#" class="menu-toggle nav-link has-dropdown">
+                <i data-feather="alert-triangle"></i><span>Reports</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="#">Chart Widgets</a></li>
-                <li><a class="nav-link" href="#">Data Widgets</a></li>
+                <li><a class="nav-link" href="{% url "user.dogspot_report_list" %}">Dogspot </a></li>
+                <li><a class="nav-link" href="{% url "user.report_list" %}">Missing Case</a></li>
             </ul>
         </li>
     </ul>
