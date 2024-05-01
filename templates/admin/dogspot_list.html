@@ -78,7 +78,7 @@ Admin Dashboard
 
                             <td>
                                 {% comment %} <a href="#" class="btn btn-primary">Detail</a> {% endcomment %}
-                                <form action="{% url "user.dogspot_update" %}" method="post">
+                                <form action="{% url "admin.dogspot_update" %}" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" value="{{ data.id }}" name="id">
                                     <button class="btn btn-primary">Update</button>

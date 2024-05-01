@@ -13,6 +13,8 @@ from django.contrib.auth.decorators import login_required
 
 from user.models import Map_Details, Dog_Pics
 
+import os
+
 
 
 # Create your views here.
@@ -205,6 +207,146 @@ def dogspot_list(request):
     # print(map_data, request.user.role)
     context = {'map_data' : map_data }
     return render(request, 'admin/dogspot_list.html', context)
+
+
+# dogspot update
+@login_required
+def dogspot_update(request):
+    if request.method == 'POST' and not request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        object_id = request.POST.get('id')
+        print(object_id, 'object_id')
+
+        if Map_Details.objects.filter(user=request.user.id, id=object_id).exists():
+            single_map_object = Map_Details.objects.filter(user=request.user.id, id=object_id).first()
+            print(single_map_object.id, single_map_object.place_name)
+
+            context = {'single_map_object' : single_map_object}
+            return render(request, 'admin/dogspot_update.html', context)
+
+
+    # def is_ajax(request):
+    #     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+    # if request.is_ajax():
+    # if is_ajax(request=request):
+    # if HttpRequest.is_ajax()
+        
+    # if isinstance(request, HttpRequest) and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+    
+    # ajax form area
+    elif request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        object_id = request.POST.get('id')
+        length = request.POST.get('length')
+        place_name = request.POST.get('place_name')
+        description = request.POST.get('description')
+        no_of_dogs = request.POST.get('no_of_dogs')
+        behaviour = request.POST.get('behaviour')
+        # images = request.FILES.getlist('images1')
+        km = request.POST.get('km')
+
+        print(object_id, 'object_id')
+        print('place_name', place_name)
+        print('description', description)
+        print('no_of_dogs', no_of_dogs)
+        print('behaviour', behaviour)
+        print('km:', km)
+
+
+        if Map_Details.objects.filter(user=request.user.id, id=object_id).exists():
+            map_object = Map_Details.objects.get(user=request.user.id, id=object_id)
+
+
+            zone = {}
+            # Red Zone (Aggressive, Biting, Territorial, Illness):
+            if 'Aggressive' in behaviour or 'Biting' in behaviour or 'Territorial' in behaviour or 'Illness' in behaviour:
+                print( 'Red Zone (Aggressive, Biting, Territorial, Illness):..................')
+
+                zone['zone'] = 'red'
+                zone['radius_color'] = '#FF0000'
+                zone['radius_color_hexcode'] = '#FF0000'
+
+            # Yellow Zone (Barking, Chasing):
+            elif 'Barking' in behaviour or 'Chasing' in behaviour:
+                print('Yellow Zone (Barking, Chasing):..................')
+
+                zone['zone'] = 'yellow'
+                zone['radius_color'] = '#FFD326'
+                zone['radius_color_hexcode'] = '#FFD326'
+
+            # Green Zone (Social, Friendly)
+            else:
+                print(' Green Zone (Social, Friendly)..................')
+
+                zone['zone'] = 'green'
+                zone['radius_color'] = '#2AAD27'
+                zone['radius_color_hexcode'] = '#2AAD27'
+
+            print('Zone dictionary:', zone)
+            print('Zone:', zone['zone'])
+            print('radius_color:', zone['radius_color'])
+            print('radius_color_hexcode:', zone['radius_color_hexcode'])
+
+            map_object.place_name = place_name
+            map_object.description = description
+            map_object.no_of_dogs = no_of_dogs
+            map_object.behaviour = behaviour
+            map_object.zone = zone['zone']
+            map_object.radius_color=zone['radius_color']
+            map_object.radius_color_hexcode=zone['radius_color_hexcode']
+            map_object.km_distance=km
+
+            map_object.save() # re-saving old data with new data
+
+
+            dog_pics_db = map_object.dog_pics_set.all() # all child images of "Map_Details" table (reverse relationship) 
+
+            dog_pics_db_images_length = dog_pics_db.count() # all images count(length)
+
+            print('count :', dog_pics_db_images_length)
+            print('length :' , length)
+
+
+
+            # only check if new image found
+            # condition for checking new image comes from "form" or not
+            if dog_pics_db_images_length == 1 or dog_pics_db_images_length != int(length):
+                print('changes detected ...............................')
+
+                # deleting all "old-images" from media folder
+                for dog_pics_row in map_object.dog_pics_set.all():
+
+                    if len(request.FILES) != 0:
+                        if dog_pics_row.image and os.path.exists(dog_pics_row.image.path):
+                            os.remove(dog_pics_row.image.path) # removing the "old-image" from media folder
+                            print('old image removed')
+
+            
+                dog_pics_db.delete() # deleting all image url objects from database "image" field
+
+
+                # adding new "image urls" to database and "image files" to media folder
+                for file_num in range(0, int(length)):
+                    image = request.FILES.get(f'images{file_num}')
+                    print('image : ', image, 'form image value')
+
+                    # adding images to database and media folder
+                    Dog_Pics.objects.create(
+                        map_id = map_object,
+                        # image = image
+                        image = image_compressor(image) # calling a image compression function
+                    )
+                    print('image db again created')
+
+
+            else:
+                print('no image change detected...............................')
+
+            # for dog_pics_row in map_object.dog_pics_set.all():
+            #     print(dog_pics_row.image.name.split('/')[-1], 'database value')        
+
+        return JsonResponse({'status': True},safe=False)
+
+    else:
+        return redirect(dogspot_list)
 
 @login_required
 def missings_all(request):

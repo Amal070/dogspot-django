@@ -27,14 +27,14 @@
         </li>
 
 
-        <li class="dropdown {% if request.resolver_match.url_name == 'admin.map_marker' or request.resolver_match.url_name == 'admin.add_dogspot' or request.resolver_match.url_name == 'admin.dogspot_list' %} active {% endif %}">
+        <li class="dropdown {% if request.resolver_match.url_name == 'admin.map_marker' or request.resolver_match.url_name == 'admin.add_dogspot' or request.resolver_match.url_name == 'admin.dogspot_list' or request.resolver_match.url_name == 'admin.dogspot_update' %} active {% endif %}">
             <a href="#" class="menu-toggle nav-link has-dropdown">
                 <i data-feather="map-pin"></i><span>Add Dogspot</span></a>
             <ul class="dropdown-menu">
                 <li class="{% if request.resolver_match.url_name == 'admin.map_marker' or request.resolver_match.url_name == 'admin.add_dogspot' %} active {% endif %}">
                     <a class="nav-link" href="{% url "admin.map_marker" %}">Add</a>
                 </li>
-                <li class="{% if request.resolver_match.url_name == 'admin.dogspot_list' %}active{% endif %}">
+                <li class="{% if request.resolver_match.url_name == 'admin.dogspot_list' or request.resolver_match.url_name == 'admin.dogspot_update' %}active{% endif %}">
                     <a class="nav-link" href="{% url "admin.dogspot_list" %}">Your spot</a>
                 </li>
             </ul>
