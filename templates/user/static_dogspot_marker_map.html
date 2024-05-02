@@ -71,7 +71,7 @@ margin-top: -50px;">
     }).addTo(map);
 
     // request location update and set location
-    lc.start(); // this will 
+    {% comment %} lc.start(); // this will  {% endcomment %}
 
     function onLocationFound(e) {
         var radius = e.accuracy;
